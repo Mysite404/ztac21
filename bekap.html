@@ -907,27 +907,43 @@
     
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-slider">
-            <div class="slide slide-1 active"></div>
-            <div class="slide slide-2"></div>
-            <div class="slide slide-3"></div>
+    <div class="hero-slider">
+        <!-- Video as first slide -->
+        <div class="slide slide-video active">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="/assets/vid/vid.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
         </div>
         
-        <div class="hero-content">
-            <h1 class="fade-in">ZTAC Precision</h1>
-            <p class="fade-in delay-1">Gear Up. Move Smart.</p>
-            <div class="hero-btns fade-in delay-2">
-                <a href="#products" class="btn">Shop Now</a>
-                <a href="#about" class="btn">Learn More</a>
-            </div>
+        <!-- Existing image slides -->
+        <div class="slide slide-1">
+            <div class="slide-bg"></div>
         </div>
-        
-        <div class="slider-dots">
-            <div class="dot active" data-slide="0"></div>
-            <div class="dot" data-slide="1"></div>
-            <div class="dot" data-slide="2"></div>
+        <div class="slide slide-2">
+            <div class="slide-bg"></div>
         </div>
-    </section>
+        <div class="slide slide-3">
+            <div class="slide-bg"></div>
+        </div>
+    </div>
+    
+    <div class="hero-content">
+        <h1 class="fade-in">ZTAC Precision</h1>
+        <p class="fade-in delay-1">Gear Up. Move Smart.</p>
+        <div class="hero-btns fade-in delay-2">
+            <a href="#products" class="btn">Shop Now</a>
+            <a href="#about" class="btn">Learn More</a>
+        </div>
+    </div>
+    
+    <div class="slider-dots">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+        <div class="dot" data-slide="3"></div>
+    </div>
+</section>
     
     <!-- Products Section -->
     <section class="products" id="products">
@@ -1209,6 +1225,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <script>
+        
+        // Auto slide change (skip video after first play)
+        setInterval(() => {
+            if (!videoPlayed && currentSlide === 0) {
+                const video = document.querySelector('.hero-video');
+                video.onended = () => {
+                    videoPlayed = true;
+                    showSlide(1);
+                };
+            } else {
+                let nextSlide = (currentSlide + 1) % slides.length;
+                // Skip back to image slides after video
+                if (nextSlide === 0 && videoPlayed) nextSlide = 1;
+                showSlide(nextSlide);
+            }
+        }, 8000);
+
+        // Manual dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (index === 0) videoPlayed = true;
+                showSlide(index);
+            });
+        });
+
+        // Initialize video
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('.hero-video');
+            video.muted = true;
+            video.playsInline = true;
+            video.play().catch(e => console.log("Video autoplay prevented:", e));
+        });
+
         // Mobile Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileMenu = document.querySelector('.mobile-menu');
