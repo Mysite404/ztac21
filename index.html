@@ -6,6 +6,7 @@
     <title>ZTAC Precision | Tactical Gear & Outdoor Equipment</title>
     <meta name="description" content="Premium tactical gear and outdoor equipment. Gear Up. Move Smart.">
     <link rel="icon" type="image/x-icon" href="/assets/img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* CSS Variables for Theming */
         :root {
@@ -42,6 +43,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         html {
@@ -71,6 +76,7 @@
             max-width: 100%;
             height: auto;
             display: block;
+            pointer-events: none;
         }
         
         button {
@@ -180,6 +186,12 @@
             color: var(--primary);
             display: flex;
             align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: auto;
         }
         
         .logo span {
@@ -299,8 +311,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
             opacity: 0;
             transition: opacity 1s ease;
         }
@@ -309,17 +319,43 @@
             opacity: 1;
         }
         
-        /* TODO: Replace with actual hero images */
-        .slide-1 {
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide-1 .slide-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/image.png');
         }
         
-        .slide-2 {
+        .slide-2 .slide-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(2\).png');
         }
         
-        .slide-3 {
+        .slide-3 .slide-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(3\).png');
+        }
+        
+        /* Video Hero Styles */
+        .slide-video {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .hero-content {
@@ -474,6 +510,28 @@
             width: auto;
             margin: 0 auto;
             border-radius: var(--radius);
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .slider-nav button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slider-nav button:hover {
+            background-color: var(--accent);
         }
         
         /* Projects Section */
@@ -818,71 +876,6 @@
         .delay-3 {
             animation-delay: 0.6s;
         }
-
-        .product-slide {
-            display: none; /* Hide all slides by default */
-        }
-        .product-slide.active {
-            display: block; /* Only show the active slide */
-        }
-
-        .slider-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .slider-nav button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .slider-nav button:hover {
-            background-color: var(--accent);
-        }
-
-    /* Video Hero Styles */
-        .slide-video {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Ensure other slides maintain full size */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .slide-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
     </style>
 </head>
 <body>
@@ -891,7 +884,7 @@
         <div class="container">
             <nav>
                 <a href="#" class="logo">
-                    <img style="width: 60px; padding-right: 10px;" src="assets/img/favicon.png" alt="logo">
+                    <img src="assets/img/favicon.png" alt="ZTAC Precision Logo">
                     ZTAC<span>Precision</span>
                 </a>
                 
@@ -923,44 +916,44 @@
     </header>
     
     <!-- Hero Section -->
-<section class="hero" id="home">
-    <div class="hero-slider">
-        <!-- Video as first slide -->
-        <div class="slide slide-video active">
-            <video autoplay muted playsinline class="hero-video">
-                <source src="/assets/vid/vid.mp4" type="video/mp4">
-                Your browser does not support HTML5 video.
-            </video>
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <!-- Video as first slide -->
+            <div class="slide slide-video active">
+                <video autoplay muted playsinline loop class="hero-video">
+                    <source src="/assets/vid/vid.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
+            
+            <!-- Existing image slides -->
+            <div class="slide slide-1">
+                <div class="slide-bg"></div>
+            </div>
+            <div class="slide slide-2">
+                <div class="slide-bg"></div>
+            </div>
+            <div class="slide slide-3">
+                <div class="slide-bg"></div>
+            </div>
         </div>
         
-        <!-- Existing image slides -->
-        <div class="slide slide-1">
-            <div class="slide-bg"></div>
+        <div class="hero-content">
+            <h1 class="fade-in">ZTAC Precision</h1>
+            <p class="fade-in delay-1">Gear Up. Move Smart.</p>
+            <div class="hero-btns fade-in delay-2">
+                <a href="#products" class="btn">Shop Now</a>
+                <a href="#about" class="btn">Learn More</a>
+            </div>
         </div>
-        <div class="slide slide-2">
-            <div class="slide-bg"></div>
+        
+        <div class="slider-dots">
+            <div class="dot active" data-slide="0"></div>
+            <div class="dot" data-slide="1"></div>
+            <div class="dot" data-slide="2"></div>
+            <div class="dot" data-slide="3"></div>
         </div>
-        <div class="slide slide-3">
-            <div class="slide-bg"></div>
-        </div>
-    </div>
-    
-    <div class="hero-content">
-        <h1 class="fade-in">ZTAC Precision</h1>
-        <p class="fade-in delay-1">Gear Up. Move Smart.</p>
-        <div class="hero-btns fade-in delay-2">
-            <a href="#products" class="btn">Shop Now</a>
-            <a href="#about" class="btn">Learn More</a>
-        </div>
-    </div>
-    
-    <div class="slider-dots">
-        <div class="dot active" data-slide="0"></div>
-        <div class="dot" data-slide="1"></div>
-        <div class="dot" data-slide="2"></div>
-        <div class="dot" data-slide="3"></div>
-    </div>
-</section>
+    </section>
     
     <!-- Products Section -->
     <section class="products" id="products">
@@ -1065,8 +1058,7 @@
                 <span id="slide-counter">1/1</span>
                 <button class="next-slide">&gt;</button>
             </div>
-
-            <a href="#" class="btn" id="shopee-link" target="_blank" >View on Shopee</a>
+            <a href="#" class="btn" id="shopee-link" target="_blank">View on Shopee</a>
         </div>
     </div>
     
@@ -1076,7 +1068,6 @@
             <h2 class="section-title">Field Ops Gallery</h2>
             
             <div class="projects-gallery">
-                <!-- TODO: Replace with actual project images -->
                 <div class="project-item card fade-in">
                     <img src="/assets/img/image.png" alt="Field Operation 1">
                     <div class="project-overlay">
@@ -1124,7 +1115,6 @@
                         <p>Low-light gear performance</p>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -1246,119 +1236,7 @@
         <i class="fas fa-moon"></i>
     </div>
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <script>
-    class HeroSlider {
-    constructor() {
-        this.slides = document.querySelectorAll('.slide');
-        this.dots = document.querySelectorAll('.dot');
-        this.video = document.querySelector('.hero-video');
-        this.currentSlide = 0;
-        this.videoTimer = null;
-        this.videoDuration = 25000; // Changed to 25 seconds
-        this.imageSlideDuration = 5000; // 5 seconds
-        this.imageSlideInterval = null;
-        
-        this.init();
-    }
-    
-    init() {
-        // Set up video
-        this.video.muted = true;
-        this.video.playsInline = true;
-        
-        // Start with video
-        this.showSlide(0);
-        
-        // Set up dot navigation
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.handleDotClick(index));
-        });
-    }
-    
-    showSlide(index) {
-        // Hide all slides
-        this.slides.forEach(slide => slide.classList.remove('active'));
-        this.dots.forEach(dot => dot.classList.remove('active'));
-        
-        // Show selected slide
-        this.slides[index].classList.add('active');
-        this.dots[index].classList.add('active');
-        this.currentSlide = index;
-        
-        // Handle video slide
-        if (index === 0) {
-            this.startVideo();
-        } else {
-            this.handleImageSlide();
-        }
-    }
-    
-    startVideo() {
-        // Clear any existing timers
-        clearTimeout(this.videoTimer);
-        clearInterval(this.imageSlideInterval);
-        
-        // Start or restart video
-        this.video.currentTime = 0;
-        this.video.play().catch(e => console.log("Video play error:", e));
-        
-        // Set timer to advance after full duration
-        this.videoTimer = setTimeout(() => {
-            this.showSlide(1);
-            this.startImageSlider();
-        }, this.videoDuration);
-    }
-    
-    handleImageSlide() {
-        // Pause video if we're not on video slide
-        this.video.pause();
-        
-        // Clear video timer
-        clearTimeout(this.videoTimer);
-    }
-    
-    startImageSlider() {
-        // Clear any existing interval
-        clearInterval(this.imageSlideInterval);
-        
-        // Start auto-advancing through images
-        this.imageSlideInterval = setInterval(() => {
-            let nextSlide = (this.currentSlide + 1) % this.slides.length;
-            if (nextSlide === 0) nextSlide = 1; // Skip video slide
-            this.showSlide(nextSlide);
-        }, this.imageSlideDuration);
-    }
-    
-    handleDotClick(index) {
-        if (index === 0) {
-            // Going back to video - restart it
-            this.showSlide(0);
-        } else {
-            // Going to image - pause video and show image
-            this.showSlide(index);
-            
-            // If we were on video, start image slider
-            if (this.currentSlide === 0) {
-                this.startImageSlider();
-            }
-        }
-    }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new HeroSlider();
-});
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new HeroSlider();
-});
-
-
         // Mobile Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -1375,45 +1253,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mobileMenu.classList.remove('active');
             });
         });
-        
-        
-        class HeroSlider {
-    constructor() {
-        this.slides = document.querySelectorAll('.slide');
-        this.dots = document.querySelectorAll('.dot');
-        this.video = document.querySelector('.hero-video');
-        this.currentSlide = 0;
-        this.videoTimer = null;
-        this.videoStartTime = null;
-        this.videoDuration = 30000; // 30 seconds
-        this.imageSlideDuration = 5000; // 5 seconds
-        this.imageSlideInterval = null;
-        
-        this.init();
-    }
-    
-    init() {
-        // Set up video
-        this.video.muted = true;
-        this.video.playsInline = true;
-        
-        // Start with video
-        this.showSlide(0);
-        
-        // Set up dot navigation
-        this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.handleDotClick(index));
-        });
-    }
-    
-    showSlide(index) {
-        // Hide all slides
-        this.slides.forEach(slide => slide.classList.remove('active'));
-        this.dots.forEach(dot => dot.classList.remove('active'));
-        
-        // Show selected slide
-        this.slides[index].classList.add('active');
-        this.dots[inde
         
         // Theme Toggle
         const themeToggle = document.querySelector('.theme-toggle');
@@ -1435,6 +1274,110 @@ document.addEventListener('DOMContentLoaded', () => {
         html.setAttribute('data-theme', savedTheme);
         themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
         
+        // Hero Slider
+        class HeroSlider {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.dots = document.querySelectorAll('.dot');
+                this.video = document.querySelector('.hero-video');
+                this.currentSlide = 0;
+                this.videoTimer = null;
+                this.videoDuration = 25000; // 25 seconds
+                this.imageSlideDuration = 5000; // 5 seconds
+                this.imageSlideInterval = null;
+                
+                this.init();
+            }
+            
+            init() {
+                // Set up video
+                this.video.muted = true;
+                this.video.playsInline = true;
+                
+                // Start with video
+                this.showSlide(0);
+                
+                // Set up dot navigation
+                this.dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => this.handleDotClick(index));
+                });
+            }
+            
+            showSlide(index) {
+                // Hide all slides
+                this.slides.forEach(slide => slide.classList.remove('active'));
+                this.dots.forEach(dot => dot.classList.remove('active'));
+                
+                // Show selected slide
+                this.slides[index].classList.add('active');
+                this.dots[index].classList.add('active');
+                this.currentSlide = index;
+                
+                // Handle video slide
+                if (index === 0) {
+                    this.startVideo();
+                } else {
+                    this.handleImageSlide();
+                }
+            }
+            
+            startVideo() {
+                // Clear any existing timers
+                clearTimeout(this.videoTimer);
+                clearInterval(this.imageSlideInterval);
+                
+                // Start or restart video
+                this.video.currentTime = 0;
+                this.video.play().catch(e => console.log("Video play error:", e));
+                
+                // Set timer to advance after full duration
+                this.videoTimer = setTimeout(() => {
+                    this.showSlide(1);
+                    this.startImageSlider();
+                }, this.videoDuration);
+            }
+            
+            handleImageSlide() {
+                // Pause video if we're not on video slide
+                this.video.pause();
+                
+                // Clear video timer
+                clearTimeout(this.videoTimer);
+            }
+            
+            startImageSlider() {
+                // Clear any existing interval
+                clearInterval(this.imageSlideInterval);
+                
+                // Start auto-advancing through images
+                this.imageSlideInterval = setInterval(() => {
+                    let nextSlide = (this.currentSlide + 1) % this.slides.length;
+                    if (nextSlide === 0) nextSlide = 1; // Skip video slide
+                    this.showSlide(nextSlide);
+                }, this.imageSlideDuration);
+            }
+            
+            handleDotClick(index) {
+                if (index === 0) {
+                    // Going back to video - restart it
+                    this.showSlide(0);
+                } else {
+                    // Going to image - pause video and show image
+                    this.showSlide(index);
+                    
+                    // If we were on video, start image slider
+                    if (this.currentSlide === 0) {
+                        this.startImageSlider();
+                    }
+                }
+            }
+        }
+
+        // Initialize Hero Slider
+        document.addEventListener('DOMContentLoaded', () => {
+            new HeroSlider();
+        });
+
         // Product Modal
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
@@ -1521,39 +1464,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         
+        // Show product slide
+        function showProductSlide(index) {
+            productSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentSlideIndex = index;
+            updateSlideCounter();
+        }
+
+        function updateSlideCounter() {
+            if (currentProduct) {
+                slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
+            }
+        }
+
         // Open modal with product data
         viewProductBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const productId = btn.getAttribute('data-product');
                 currentProduct = products[productId];
-                currentSlideIndex = 0;
                 
                 // Set product info
                 modalProductTitle.textContent = currentProduct.title;
                 modalProductDesc.textContent = currentProduct.description;
                 shopeeLink.href = currentProduct.shopee;
-                const shopeeLink = document.getElementById('shopee-link');
                 
                 // Clear all slides first
                 productSlides.forEach(slide => {
-                    slide.style.display = 'none';
                     slide.classList.remove('active');
-                    slide.querySelector('img').src = '';
                 });
-                
-                // Set images for current product
+
+                // Load images for current product
                 currentProduct.images.forEach((img, index) => {
-                    if (index < productSlides.length) {
+                    if (productSlides[index]) {
                         productSlides[index].querySelector('img').src = img;
-                        productSlides[index].style.display = 'block';
                     }
                 });
-                
+
                 // Show first slide
-                productSlides[0].classList.add('active');
-                updateSlideCounter();
-                
-                // Show modal
+                showProductSlide(0);
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
@@ -1573,54 +1523,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Replace your existing slider navigation code with this:
-            function showProductSlide(index) {
-            productSlides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-         });
-           currentSlideIndex = index;
-           updateSlideCounter();
-        }
+        // Slide navigation
+        prevSlideBtn.addEventListener('click', () => {
+            let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
 
-        function updateSlideCounter() {
-            if (currentProduct) {
-            slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
-        }
-        }
-        viewProductBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const productId = btn.getAttribute('data-product');
-    currentProduct = products[productId];
-    currentSlideIndex = 0;
-    
-    // Clear previous slides
-    productSlides.forEach(slide => {
-      slide.classList.remove('active');
-    });
-
-    // Load new images (only for available slides)
-    currentProduct.images.forEach((img, index) => {
-      if (productSlides[index]) {
-        productSlides[index].querySelector('img').src = img;
-      }
-    });
-
-    // Show first slide
-    showProductSlide(0);
-    modal.classList.add('active');
-  });
-});
-
-// Update prev/next button event listeners:
-prevSlideBtn.addEventListener('click', () => {
-  let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
-  showProductSlide(newIndex);
-});
-
-nextSlideBtn.addEventListener('click', () => {
-  let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
-  showProductSlide(newIndex);
-});
+        nextSlideBtn.addEventListener('click', () => {
+            let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1658,175 +1570,73 @@ nextSlideBtn.addEventListener('click', () => {
             observer.observe(el);
         });
 
-        document.getElementById('shopee-link').addEventListener('click', function(e) {
-  e.preventDefault(); // Stop default "#" behavior
-  window.open(this.href, '_blank'); // Force open in new tab
-});
+        // WhatsApp Form Submission
+        const whatsappForm = document.getElementById('whatsappForm');
+        const customerServiceNumber = "60143242247"; // Your number without + or -
 
-viewProductBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const productId = btn.getAttribute('data-product');
-    currentProduct = products[productId];
-    shopeeLink.href = currentProduct.shopee; // Should update here
-    console.log('Shopee link set to:', shopeeLink.href); // Debug
-  });
-});
-
-// ANTI MANUSIA PENIRU // 
-// Security/Protection Features
-document.addEventListener('DOMContentLoaded', function() {
-    // Disable right-click (context menu)
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-    // Disable image dragging
-    document.querySelectorAll('img').forEach(img => {
-        img.setAttribute('draggable', 'false');
-        img.addEventListener('dragstart', (e) => e.preventDefault());
-    });
-
-    // Disable text selection
-    document.addEventListener('selectstart', (e) => e.preventDefault());
-    const style = document.createElement('style');
-    style.innerHTML = `
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Disable keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        // Ctrl + U (View Source)
-        if (e.ctrlKey && e.key === 'u') e.preventDefault();
-        // Ctrl + Shift + I / F12 (DevTools)
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
-        if (e.key === 'F12') e.preventDefault();
-        // Ctrl + C (Copy)
-        if (e.ctrlKey && e.key === 'c') e.preventDefault();
-        // Ctrl + P (Print)
-        if (e.ctrlKey && e.key === 'p') e.preventDefault();
-        // Ctrl + S (Save)
-        if (e.ctrlKey && e.key === 's') e.preventDefault();
-    });
-});
-
-// WHATSAPP FORM // 
-// WhatsApp Form Submission
-const whatsappForm = document.getElementById('whatsappForm');
-const customerServiceNumber = "60143242247"; // Your number without + or -
-
-whatsappForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form values
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const message = document.getElementById('message').value;
-    
-    // Format phone number (remove all non-digit characters)
-    const formattedPhone = phone.replace(/\D/g, '');
-    
-    // Create WhatsApp message
-    const whatsappMessage = `*New Message from ZTAC Precision Website*%0A%0A` +
-                            `*Name:* ${name}%0A` +
-                            `*Phone:* ${phone}%0A` +
-                            (email ? `*Email:* ${email}%0A` : '') +
-                            `*Message:*%0A${message}`;
-    
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/${customerServiceNumber}?text=${whatsappMessage}`, '_blank');
-    
-    // Optional: Reset form after submission
-    whatsappForm.reset();
-    
-    // Optional: Show confirmation message
-    alert("Thank you! You'll be redirected to WhatsApp to complete your message.");
-});
-
-// Phone number formatting
-const phoneInput = document.getElementById('phone');
-phoneInput.addEventListener('input', function(e) {
-    // Format as +60 12-345 6789
-    let value = this.value.replace(/\D/g, '');
-    if (value.startsWith('60')) {
-        value = '+' + value;
-    }
-    if (value.length > 3) {
-        value = value.substring(0, 3) + ' ' + value.substring(3);
-    }
-    if (value.length > 7) {
-        value = value.substring(0, 7) + '-' + value.substring(7);
-    }
-    if (value.length > 11) {
-        value = value.substring(0, 11) + ' ' + value.substring(11);
-    }
-    this.value = value.substring(0, 15);
-});
-
-// Hero Slider - Updated for 30-second video
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-let currentSlide = 0;
-let videoTimer;
-
-function showSlide(index) {
-    // Clear any existing timer
-    clearTimeout(videoTimer);
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-    currentSlide = index;
-    
-    // If showing video (slide 0), set timer to advance after 30 seconds
-    if (index === 0) {
-        const video = document.querySelector('.hero-video');
-        video.currentTime = 0;
-        video.play().catch(e => console.log("Video autoplay prevented:", e));
-        
-        videoTimer = setTimeout(() => {
-            showSlide(1);
-        }, 30000); // 30 seconds
-    }
-}
-
-// Auto slide change for images only (after video)
-function startImageSlider() {
-    setInterval(() => {
-        if (currentSlide === 0) return; // Don't auto-advance from video
-        let nextSlide = (currentSlide + 1) % slides.length;
-        if (nextSlide === 0) nextSlide = 1; // Skip back to first image
-        showSlide(nextSlide);
-    }, 5000); // 5 seconds for image slides
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    const video = document.querySelector('.hero-video');
-    video.muted = true;
-    video.playsInline = true;
-    
-    // Start with video
-    showSlide(0);
-    
-    // Start image slider after video plays
-    setTimeout(startImageSlider, 30000);
-    
-    // Manual dot navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            showSlide(index);
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // Format phone number (remove all non-digit characters)
+            const formattedPhone = phone.replace(/\D/g, '');
+            
+            // Create WhatsApp message
+            const whatsappMessage = `*New Message from ZTAC Precision Website*%0A%0A` +
+                                    `*Name:* ${name}%0A` +
+                                    `*Phone:* ${phone}%0A` +
+                                    (email ? `*Email:* ${email}%0A` : '') +
+                                    `*Message:*%0A${message}`;
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/${customerServiceNumber}?text=${whatsappMessage}`, '_blank');
+            
+            // Optional: Reset form after submission
+            whatsappForm.reset();
         });
-    });
-});
 
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            // Format as +60 12-345 6789
+            let value = this.value.replace(/\D/g, '');
+            if (value.startsWith('60')) {
+                value = '+' + value;
+            }
+            if (value.length > 3) {
+                value = value.substring(0, 3) + ' ' + value.substring(3);
+            }
+            if (value.length > 7) {
+                value = value.substring(0, 7) + '-' + value.substring(7);
+            }
+            if (value.length > 11) {
+                value = value.substring(0, 11) + ' ' + value.substring(11);
+            }
+            this.value = value.substring(0, 15);
+        });
 
+        // Security/Protection Features
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+            img.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Disable various keyboard shortcuts
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
+            if (e.key === 'F12') e.preventDefault();
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) e.preventDefault();
+            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) e.preventDefault();
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
+        });
     </script>
 </body>
 </html>
