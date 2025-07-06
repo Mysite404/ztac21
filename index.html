@@ -851,12 +851,13 @@
     /* Video Hero Styles */
         .slide-video {
             position: relative;
+            width: 100%;
         }
 
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 100%;
+            left: 100%;
             transform: translate
         }
     </style>
@@ -1611,6 +1612,67 @@ phoneInput.addEventListener('input', function(e) {
         value = value.substring(0, 11) + ' ' + value.substring(11);
     }
     this.value = value.substring(0, 15);
+});
+
+
+// Hero Slider - Updated for video
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+let videoPlayed = false;
+
+function showSlide(index) {
+    // Pause video if we're switching away from it
+    if (currentSlide === 0 && index !== 0) {
+        const video = document.querySelector('.hero-video');
+        video.pause();
+    }
+    
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+    
+    // Autoplay video when returning to first slide
+    if (index === 0) {
+        const video = document.querySelector('.hero-video');
+        video.currentTime = 0;
+        video.play().catch(e => console.log("Video autoplay prevented:", e));
+    }
+}
+
+// Auto slide change (skip video after first play)
+setInterval(() => {
+    if (!videoPlayed && currentSlide === 0) {
+        const video = document.querySelector('.hero-video');
+        video.onended = () => {
+            videoPlayed = true;
+            showSlide(1);
+        };
+    } else {
+        let nextSlide = (currentSlide + 1) % slides.length;
+        // Skip back to image slides after video
+        if (nextSlide === 0 && videoPlayed) nextSlide = 1;
+        showSlide(nextSlide);
+    }
+}, 8000); // Increased interval to 8 seconds
+
+// Manual dot navigation
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        if (index === 0) videoPlayed = true;
+        showSlide(index);
+    });
+});
+
+// Initialize video
+document.addEventListener('DOMContentLoaded', () => {
+    const video = document.querySelector('.hero-video');
+    video.muted = true;
+    video.playsInline = true;
+    video.play().catch(e => console.log("Video autoplay prevented:", e));
 });
     </script>
 </body>
