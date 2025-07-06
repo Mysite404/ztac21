@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-
-<html data-theme="light" lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ZTAC Precision | Tactical Gear &amp; Outdoor Equipment</title>
-<meta content="Premium tactical gear and outdoor equipment. Gear Up. Move Smart." name="description"/>
-<link href="/assets/img/favicon.png" rel="icon" type="image/x-icon"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZTAC Precision | Tactical Gear & Outdoor Equipment</title>
+    <meta name="description" content="Premium tactical gear and outdoor equipment. Gear Up. Move Smart.">
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.png">
+    <style>
         /* CSS Variables for Theming */
         :root {
             --primary: #3e4419; /* Army Green */
@@ -44,10 +42,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
         }
         
         html {
@@ -77,7 +71,6 @@
             max-width: 100%;
             height: auto;
             display: block;
-            pointer-events: none;
         }
         
         button {
@@ -187,12 +180,6 @@
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        
-        .logo img {
-            width: 50px;
-            height: auto;
         }
         
         .logo span {
@@ -312,6 +299,8 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background-size: cover;
+            background-position: center;
             opacity: 0;
             transition: opacity 1s ease;
         }
@@ -320,43 +309,17 @@
             opacity: 1;
         }
         
-        .slide-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .slide-1 .slide-bg {
+        /* TODO: Replace with actual hero images */
+        .slide-1 {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/image.png');
         }
         
-        .slide-2 .slide-bg {
+        .slide-2 {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(2\).png');
         }
         
-        .slide-3 .slide-bg {
+        .slide-3 {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(3\).png');
-        }
-        
-        /* Video Hero Styles */
-        .slide-video {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
         
         .hero-content {
@@ -511,28 +474,6 @@
             width: auto;
             margin: 0 auto;
             border-radius: var(--radius);
-        }
-        
-        .slider-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .slider-nav button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .slider-nav button:hover {
-            background-color: var(--accent);
         }
         
         /* Projects Section */
@@ -878,605 +819,461 @@
             animation-delay: 0.6s;
         }
 
-    #shopee-link {
-        display: block;
-        margin-top: 25px;
-        background-color: var(--accent);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
+        .product-slide {
+            display: none; /* Hide all slides by default */
+        }
+        .product-slide.active {
+            display: block; /* Only show the active slide */
+        }
 
-    #shopee-link:hover {
-        background-color: #3a2a1e;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(74, 55, 40, 0.3);
-    }
-
-    #shopee-link::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V11H19V6.413L11.207 14.207L9.793 12.793L17.585 5H13V3H21Z'%3E%3C/path%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        transition: transform 0.3s ease;
-    }
-
-    #shopee-link:hover::after {
-        transform: translateY(-50%) translateX(3px);
-    }
-
-    /* Instagram Style Navigation */
-    .instagram-arrows {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px;
-        z-index: 10;
-    }
-
-    .instagram-arrow {
-        pointer-events: all;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.9);
-        backdrop-filter: blur(5px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        opacity: 0.9;
-    }
-
-    .instagram-arrow:hover {
-        background: rgba(255,255,255,1);
-        transform: scale(1.1);
-    }
-
-    .instagram-arrow svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .instagram-dots {
-        position: absolute;
-        bottom: 15px;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 6px;
-        z-index: 10;
-    }
-
-    .instagram-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.5);
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .instagram-dot.active {
-        background: #fff;
-        transform: scale(1.3);
-    }
-
-    /* Touch improvements for mobile */
-    @media (max-width: 768px) {
-        .instagram-arrow {
-            width: 44px;
-            height: 44px;
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
         
-        .instagram-arrow svg {
-            width: 20px;
-            height: 20px;
+        .slider-nav button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
         }
         
-        .instagram-dots {
-            bottom: 20px;
+        .slider-nav button:hover {
+            background-color: var(--accent);
         }
-        
-        .instagram-dot {
-            width: 8px;
-            height: 8px;
-        }
-    }
-
-    /* Remove old navigation if still present */
-    .slider-nav {
-        display: none !important;
-    }
-    
-    /* Instagram Style Modal Navigation */
-.instagram-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.instagram-arrow {
-    pointer-events: all;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.9;
-}
-
-.instagram-prev {
-    left: 20px;
-}
-
-.instagram-next {
-    right: 20px;
-}
-
-.instagram-arrow:hover {
-    background: rgba(255,255,255,1);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.instagram-arrow svg {
-    width: 20px;
-    height: 20px;
-}
-
-.instagram-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    pointer-events: all;
-}
-
-.instagram-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.instagram-dot.active {
-    background: #fff;
-    transform: scale(1.3);
-}
-
-/* Product Slide Styling */
-.product-slide {
-    display: none;
-    text-align: center;
-    height: 100%;
-}
-
-.product-slide.active {
-    display: block;
-}
-
-.product-slide img {
-    max-height: 500px;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    display: block;
-}
-
-/* Remove old navigation */
-.slider-nav {
-    display: none !important;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .instagram-arrow {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .instagram-dots {
-        bottom: 15px;
-    }
-}
 
     </style>
 </head>
 <body>
-<!-- Navigation -->
-<header>
-<div class="container">
-<nav>
-<a class="logo" href="/">
-<img alt="ZTAC Precision Logo" src="assets/img/favicon.png"/>
-                    ZTAC<span>Precision</span>
-</a>
-<div class="nav-links">
-<a aria-label="Home" href="#home">Home</a>
-<a aria-label="Products" href="#products">Products</a>
-<a aria-label="Projects" href="#projects">Projects</a>
-<a aria-label="About" href="#about">About</a>
-<a aria-label="Contact" href="#contact">Contact</a>
-</div>
-<div aria-label="Menu" class="hamburger" role="button">
-<span></span>
-<span></span>
-<span></span>
-</div>
-</nav>
-</div>
-<div class="mobile-menu">
-<ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#products">Products</a></li>
-<li><a href="#projects">Projects</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</div>
-</header>
-<!-- Hero Section -->
-<section class="hero" id="home">
-<div class="hero-slider">
-<!-- Video as first slide -->
-<div class="slide slide-video active">
-<video autoplay="" class="hero-video" loop="" muted="" playsinline="">
-<source src="/assets/vid/vid.mp4" type="video/mp4"/>
-                    Your browser does not support HTML5 video.
-                </video>
-</div>
-<!-- Existing image slides -->
-<div class="slide slide-1">
-<div class="slide-bg"></div>
-</div>
-<div class="slide slide-2">
-<div class="slide-bg"></div>
-</div>
-<div class="slide slide-3">
-<div class="slide-bg"></div>
-</div>
-</div>
-<div class="hero-content">
-<h1 class="fade-in">ZTAC Precision</h1>
-<p class="fade-in delay-1">Gear Up. Move Smart.</p>
-<div class="hero-btns fade-in delay-2">
-<a class="btn" href="#products">Shop Now</a>
-<a class="btn" href="#about">Learn More</a>
-</div>
-</div>
-<div class="slider-dots">
-<div class="dot active" data-slide="0"></div>
-<div class="dot" data-slide="1"></div>
-<div class="dot" data-slide="2"></div>
-<div class="dot" data-slide="3"></div>
-</div>
-</section>
-<!-- Products Section -->
-<section class="products" id="products">
-<div class="container">
-<h2 class="section-title">Our Products</h2>
-<div class="products-grid">
-<!-- Product 1 -->
-<div class="product-card card fade-in">
-<img alt="TOPI HUTAN (ZTC.RIMBA) - Loreng Tempatan" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7rasl-m9lqxv41t0l01f.webp"/>
-<div class="product-info">
-<h3>TOPI HUTAN (ZTC.RIMBA)</h3>
-<p>Loreng Tempatan - High-quality jungle hat with local camouflage pattern.</p>
-<button class="btn view-product" data-product="1">View Details</button>
-</div>
-</div>
-<!-- Product 2 -->
-<div class="product-card card fade-in delay-1">
-<img alt="BOONIE HAT RIMBA ZTAC" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9u5v82nl33m43"/>
-<div class="product-info">
-<h3>BOONIE HAT RIMBA</h3>
-<p>Durable boonie hat designed for tactical and outdoor use.</p>
-<button class="btn view-product" data-product="2">View Details</button>
-</div>
-</div>
-<!-- Product 3 -->
-<div class="product-card card fade-in delay-2">
-<img alt="Tacticools Shirt -ZTAC.APPAREL" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbn9f6j4nb4"/>
-<div class="product-info">
-<h3>Tacticools Shirt</h3>
-<p>Premium tactical shirt for comfort and performance in the field.</p>
-<button class="btn view-product" data-product="3">View Details</button>
-</div>
-</div>
-<!-- Product 4 -->
-<div class="product-card card fade-in">
-<img alt="Batik Tacticool - TS (Limited Edition)" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7rasl-maf6zyfo69pmb2.webp"/>
-<div class="product-info">
-<h3>Batik Tacticool</h3>
-<p>Limited edition tactical shirt with traditional batik design.</p>
-<button class="btn view-product" data-product="4">View Details</button>
-</div>
-</div>
-<!-- Product 5 -->
-<div class="product-card card fade-in delay-1">
-<img alt="Alpha Pouch - Outdoor (IFAK/GENEREL PURPOSE) Pouch" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7rasd-mbkslf18la6pbf"/>
-<div class="product-info">
-<h3>Alpha Pouch</h3>
-<p>Versatile outdoor pouch for IFAK or general purpose use.</p>
-<button class="btn view-product" data-product="5">View Details</button>
-</div>
-</div>
-<!-- Product 6 -->
-<div class="product-card card fade-in delay-2">
-<img alt="ZTC.FXTROT Active Gear Vest" class="product-img" src="https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9ls2sxd22udff"/>
-<div class="product-info">
-<h3>ZTC.FXTROT Vest</h3>
-<p>Active gear vest suitable for outdoor &amp; fitness activities.</p>
-<button class="btn view-product" data-product="6">View Details</button>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Product Modal -->
-<div class="modal" id="productModal">
-<div class="modal-content card">
-<button class="close-modal">×</button>
-<div class="product-slider">
-<div class="product-slide active">
-<img alt="Product Image 1" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 2" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 3" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 4" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 5" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 6" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 7" src=""/>
-</div>
-</div>
-<h3 id="modal-product-title"></h3>
-<p id="modal-product-desc"></p>
-<div class="slider-nav">
-<button class="prev-slide">&lt;</button>
-<span id="slide-counter">1/1</span>
-<button class="next-slide">&gt;</button>
-</div>
-<a class="btn" href="#" id="shopee-link" target="_blank">View on Shopee</a>
-</div>
-</div>
-<!-- Projects Section -->
-<section class="projects" id="projects">
-<div class="container">
-<h2 class="section-title">Field Ops Gallery</h2>
-<div class="projects-gallery">
-<div class="project-item card fade-in">
-<img alt="Field Operation 1" src="/assets/img/image.png"/>
-<div class="project-overlay">
-<h3>Chop Chop. Dinners Ready 😄🍽️</h3>
-<p></p>
-</div>
-</div>
-<div class="project-item card fade-in">
-<img alt="Field Operation 2" src="assets/img/img (2).png"/>
-<div class="project-overlay">
-<h3>Sebelum dijual, kami uji di lapangan.</h3>
-<p>ZTAC DEV GROUP mencabar setiap peralatan ke tahap maksimum, diuji, diperhalusi &amp; dibuktikan dalam situasi sebenar.</p>
-</div>
-</div>
-<div class="project-item card fade-in">
-<img alt="Field Operation 3" src="assets/img/img (3).png"/>
-<div class="project-overlay">
-<h3>Always two steps ahead. Join the movement, break the mold.</h3>
-<p> gear up with precision and purpose.</p>
-</div>
-</div>
-<div class="project-item card fade-in">
-<img alt="Field Operation 4" src="assets/img/img (4).png"/>
-<div class="project-overlay">
-<h3>Memerhati dalam senyap, bertindak tanpa ragu. Keselamatan bukan pilihan – ia tanggungjawab.</h3>
-<p></p>
-</div>
-</div>
-<div class="project-item card fade-in">
-<img alt="Field Operation 5" src="assets/img/img (5).png"/>
-<div class="project-overlay">
-<h3>⚔️🌐</h3>
-<p></p>
-</div>
-</div>
-<div class="project-item card fade-in">
-<img alt="Field Operation 6" src="assets/img/img (6).png"/>
-<div class="project-overlay">
-<h3>“You can only fight the way you practice"</h3>
-<p>- Miyamoto Musashi</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- About Section -->
-<section class="about" id="about">
-<div class="container">
-<h2 class="section-title">About Us</h2>
-<div class="about-content">
-<div class="about-text">
-<p>Sejak penubuhan kami pada tahun 2021, ZTAC PRECISION telah menjadi pilihan utama untuk semua keperluan taktikal anda.</p>
-<p>Di ZTAC, kami pakar dalam tempahan khas – dari rekaan eksklusif, patch unik, hingga ke pakaian taktikal berkualiti tinggi yang memenuhi standard ketenteraan dan penggemar gaya lasak.</p>
-<p>Kami komited untuk memberikan anda produk premium dan servis terbaik agar anda sentiasa bersedia, bergaya, dan yakin dalam apa jua situasi.</p>
-<div class="stats">
-<div class="stat-item card">
-<h3>3+</h3>
-<p>Years in Service</p>
-</div>
-<div class="stat-item card">
-<h3>50+</h3>
-<p>Products</p>
-</div>
-<div class="stat-item card">
-<h3>10K+</h3>
-<p>Customers</p>
-</div>
-<div class="stat-item card">
-<h3>100%</h3>
-<p>Commitment</p>
-</div>
-</div>
-</div>
-<div class="about-img">
-<img alt="ZTAC Team" src="assets/img/imgstaff.png"/>
-</div>
-</div>
-</div>
-</section>
-<!-- Contact Section -->
-<section class="contact" id="contact">
-<div class="container">
-<h2 class="section-title">Get In Touch</h2>
-<div class="contact-container">
-<div class="contact-form card">
-<form id="whatsappForm">
-<div class="form-group">
-<label for="name">Name</label>
-<input id="name" name="name" placeholder="Your name" required="" type="text"/>
-</div>
-<div class="form-group">
-<label for="email">Email</label>
-<input id="email" name="email" placeholder="Your email" type="email"/>
-</div>
-<div class="form-group">
-<label for="phone">Phone Number</label>
-<input id="phone" name="phone" placeholder="+60 12-345 6789" required="" type="tel"/>
-</div>
-<div class="form-group">
-<label for="message">Message</label>
-<textarea id="message" name="message" placeholder="Your message" required=""></textarea>
-</div>
-<button class="btn" type="submit">Send a message</button>
-</form>
-</div>
-<div class="contact-info">
-<h3>Connect With Us</h3>
-<p>Have questions about our products or need custom gear? Reach out through our social channels or send us a message.</p>
-<div class="social-links">
-<a aria-label="Instagram" class="social-icon" href="https://www.instagram.com/ztac_warfare/" rel="noopener noreferrer" target="_blank">
-<i class="fab fa-instagram"></i>
-</a>
-<a aria-label="Shopee" class="social-icon" href="https://shopee.com.my/ztac21" rel="noopener noreferrer" target="_blank">
-<i class="fas fa-shopping-bag"></i>
-</a>
-<a aria-label="Facebook" class="social-icon" href="https://web.facebook.com/profile.php?id=61553928444734" rel="noopener noreferrer" target="_blank">
-<i class="fab fa-facebook-f"></i>
-</a>
-<a aria-label="TikTok" class="social-icon" href="https://www.tiktok.com/@ztac2021" rel="noopener noreferrer" target="_blank">
-<i class="fab fa-tiktok"></i>
-</a>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer>
-<div class="container">
-<div class="footer-content">
-<div class="footer-logo">ZTAC<span>Precision</span></div>
-<div class="footer-links">
-<a href="#home">Home</a>
-<a href="#products">Products</a>
-<a href="#projects">Projects</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-</div>
-<p class="copyright">© 2025 ZTAC Precision. All Rights Reserved.</p>
-</div>
-</div>
-</footer>
-<!-- Theme Toggle -->
-<div aria-label="Toggle dark mode" class="theme-toggle" role="button">
-<i class="fas fa-moon"></i>
-</div>
-<script>
-        // Product Modal with Instagram-style navigation - Fixed Version
-    document.addEventListener('DOMContentLoaded', function() {
-        // Product Modal Elements
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">ZTAC<span>Precision</span></a>
+                
+                <div class="nav-links">
+                    <a href="#home" aria-label="Home">Home</a>
+                    <a href="#products" aria-label="Products">Products</a>
+                    <a href="#projects" aria-label="Projects">Projects</a>
+                    <a href="#about" aria-label="About">About</a>
+                    <a href="#contact" aria-label="Contact">Contact</a>
+                </div>
+                
+                <div class="hamburger" aria-label="Menu" role="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+        
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <div class="slide slide-1 active"></div>
+            <div class="slide slide-2"></div>
+            <div class="slide slide-3"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="fade-in">ZTAC Precision</h1>
+            <p class="fade-in delay-1">Gear Up. Move Smart.</p>
+            <div class="hero-btns fade-in delay-2">
+                <a href="#products" class="btn">Shop Now</a>
+                <a href="#about" class="btn">Learn More</a>
+            </div>
+        </div>
+        
+        <div class="slider-dots">
+            <div class="dot active" data-slide="0"></div>
+            <div class="dot" data-slide="1"></div>
+            <div class="dot" data-slide="2"></div>
+        </div>
+    </section>
+    
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Products</h2>
+            
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card card fade-in">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7rasl-m9lqxv41t0l01f.webp" alt="TOPI HUTAN (ZTC.RIMBA) - Loreng Tempatan" class="product-img">
+                    <div class="product-info">
+                        <h3>TOPI HUTAN (ZTC.RIMBA)</h3>
+                        <p>Loreng Tempatan - High-quality jungle hat with local camouflage pattern.</p>
+                        <button class="btn view-product" data-product="1">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card card fade-in delay-1">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9u5v82nl33m43" alt="BOONIE HAT RIMBA ZTAC" class="product-img">
+                    <div class="product-info">
+                        <h3>BOONIE HAT RIMBA</h3>
+                        <p>Durable boonie hat designed for tactical and outdoor use.</p>
+                        <button class="btn view-product" data-product="2">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card card fade-in delay-2">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbn9f6j4nb4" alt="Tacticools Shirt -ZTAC.APPAREL" class="product-img">
+                    <div class="product-info">
+                        <h3>Tacticools Shirt</h3>
+                        <p>Premium tactical shirt for comfort and performance in the field.</p>
+                        <button class="btn view-product" data-product="3">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card card fade-in">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7rasl-maf6zyfo69pmb2.webp" alt="Batik Tacticool - TS (Limited Edition)" class="product-img">
+                    <div class="product-info">
+                        <h3>Batik Tacticool</h3>
+                        <p>Limited edition tactical shirt with traditional batik design.</p>
+                        <button class="btn view-product" data-product="4">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card card fade-in delay-1">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7rasd-mbkslf18la6pbf" alt="Alpha Pouch - Outdoor (IFAK/GENEREL PURPOSE) Pouch" class="product-img">
+                    <div class="product-info">
+                        <h3>Alpha Pouch</h3>
+                        <p>Versatile outdoor pouch for IFAK or general purpose use.</p>
+                        <button class="btn view-product" data-product="5">View Details</button>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card card fade-in delay-2">
+                    <img src="https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9ls2sxd22udff" alt="ZTC.FXTROT Active Gear Vest" class="product-img">
+                    <div class="product-info">
+                        <h3>ZTC.FXTROT Vest</h3>
+                        <p>Active gear vest suitable for outdoor & fitness activities.</p>
+                        <button class="btn view-product" data-product="6">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content card">
+            <button class="close-modal">&times;</button>
+            <div class="product-slider">
+                <div class="product-slide active">
+                    <img src="" alt="Product Image 1">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 2">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 3">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 4">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 5">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 6">
+                </div>
+                <div class="product-slide">
+                    <img src="" alt="Product Image 7">
+                </div>
+            </div>
+            <h3 id="modal-product-title"></h3>
+            <p id="modal-product-desc"></p>
+            <div class="slider-nav">
+                <button class="prev-slide">&lt;</button>
+                <span id="slide-counter">1/1</span>
+                <button class="next-slide">&gt;</button>
+            </div>
+
+            <a href="#" class="btn" id="shopee-link" target="_blank" >View on Shopee</a>
+        </div>
+    </div>
+    
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Field Ops Gallery</h2>
+            
+            <div class="projects-gallery">
+                <!-- TODO: Replace with actual project images -->
+                <div class="project-item card fade-in">
+                    <img src="/assets/img/image.png" alt="Field Operation 1">
+                    <div class="project-overlay">
+                        <h3>Jungle Training</h3>
+                        <p>Special forces training in dense terrain</p>
+                    </div>
+                </div>
+                
+                <div class="project-item card fade-in">
+                    <img src="assets/img/img (2).png" alt="Field Operation 2">
+                    <div class="project-overlay">
+                        <h3>Urban Tactics</h3>
+                        <p>Close quarters combat training</p>
+                    </div>
+                </div>
+                
+                <div class="project-item card fade-in">
+                    <img src="assets/img/img (3).png" alt="Field Operation 3">
+                    <div class="project-overlay">
+                        <h3>Desert Ops</h3>
+                        <p>Equipment testing in extreme conditions</p>
+                    </div>
+                </div>
+                
+                <div class="project-item card fade-in">
+                    <img src="assets/img/img (4).png" alt="Field Operation 4">
+                    <div class="project-overlay">
+                        <h3>Night Operations</h3>
+                        <p>Low-light gear performance</p>
+                    </div>
+                </div>
+
+                <div class="project-item card fade-in">
+                    <img src="assets/img/img (5).png" alt="Field Operation 5">
+                    <div class="project-overlay">
+                        <h3>Night Operations</h3>
+                        <p>Low-light gear performance</p>
+                    </div>
+                </div>
+
+                <div class="project-item card fade-in">
+                    <img src="assets/img/img (6).png" alt="Field Operation 6">
+                    <div class="project-overlay">
+                        <h3>Night Operations</h3>
+                        <p>Low-light gear performance</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Sejak penubuhan kami pada tahun 2021, ZTAC PRECISION telah menjadi pilihan utama untuk semua keperluan taktikal anda.</p>
+                    <p>Di ZTAC, kami pakar dalam tempahan khas – dari rekaan eksklusif, patch unik, hingga ke pakaian taktikal berkualiti tinggi yang memenuhi standard ketenteraan dan penggemar gaya lasak.</p>
+                    <p>Kami komited untuk memberikan anda produk premium dan servis terbaik agar anda sentiasa bersedia, bergaya, dan yakin dalam apa jua situasi.</p>
+                    
+                    <div class="stats">
+                        <div class="stat-item card">
+                            <h3>3+</h3>
+                            <p>Years in Service</p>
+                        </div>
+                        <div class="stat-item card">
+                            <h3>50+</h3>
+                            <p>Products</p>
+                        </div>
+                        <div class="stat-item card">
+                            <h3>10K+</h3>
+                            <p>Customers</p>
+                        </div>
+                        <div class="stat-item card">
+                            <h3>100%</h3>
+                            <p>Commitment</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-img">
+                    <img src="assets/img/imgstaff.png" alt="ZTAC Team">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="contact-container">
+                <div class="contact-form card">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="Phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Your message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Connect With Us</h3>
+                    <p>Have questions about our products or need custom gear? Reach out through our social channels or send us a message.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/ztac_warfare/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://shopee.com.my/ztac21" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Shopee">
+                            <i class="fas fa-shopping-bag"></i>
+                        </a>
+                        <a href="https://web.facebook.com/profile.php?id=61553928444734" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@ztac2021" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">ZTAC<span>Precision</span></div>
+                
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <p class="copyright">© 2025 ZTAC Precision. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" aria-label="Toggle dark mode" role="button">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+        
+        // Hero Slider
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto slide change
+        setInterval(() => {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        }, 5000);
+        
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            
+            // Save preference to localStorage
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        
+        // Product Modal
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
         const productSlides = document.querySelectorAll('.product-slide');
+        const prevSlideBtn = document.querySelector('.prev-slide');
+        const nextSlideBtn = document.querySelector('.next-slide');
+        const slideCounter = document.getElementById('slide-counter');
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalProductDesc = document.getElementById('modal-product-desc');
         const shopeeLink = document.getElementById('shopee-link');
-        const sliderContainer = document.querySelector('.product-slider');
-
+        
         let currentProduct = null;
         let currentSlideIndex = 0;
-
-        // Remove old navigation if exists
-        const oldNav = document.querySelector('.slider-nav');
-        if (oldNav) oldNav.remove();
-
-        // Create Instagram-style navigation
-        sliderContainer.innerHTML += `
-            <div class="instagram-nav">
-                <button class="instagram-arrow instagram-prev">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
-                <div class="instagram-dots"></div>
-                <button class="instagram-arrow instagram-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
-            </div>
-        `;
-
-        const dotsContainer = document.querySelector('.instagram-dots');
-        const prevBtn = document.querySelector('.instagram-prev');
-        const nextBtn = document.querySelector('.instagram-next');
-
+        
         // Product data
         const products = {
             1: {
@@ -1497,12 +1294,12 @@
                 title: "BOONIE HAT RIMBA ZTAC",
                 description: "Durable boonie hat designed for tactical and outdoor use. Features ventilation and a wide brim for sun protection.",
                 images: [
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9u5v82nl33m43",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasd-m9u5v82njoj6e5",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasf-m9u5v82xj9wya4",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasj-mbkr4jc2fa1w75",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rask-mbkr4jccevgx8a",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasi-mbkr4jc2fa354b"
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9u5v82nl33m43.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasd-m9u5v82njoj6e5.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasf-m9u5v82xj9wya4.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasj-mbkr4jc2fa1w75.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rask-mbkr4jccevgx8a.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasi-mbkr4jc2fa354b.webp"
                 ],
                 shopee: "https://shopee.com.my/BOONIE-HAT-RIMBA-ZTAC-i.178104872.18985766965"
             },
@@ -1510,10 +1307,10 @@
                 title: "Tacticools Shirt -ZTAC.APPAREL",
                 description: "Premium tactical shirt for comfort and performance in the field. Moisture-wicking fabric with reinforced stitching.",
                 images: [
-                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbn9f6j4nb4",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbwd3v05y0f",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasl-mbtgbh6s2hli47",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasj-mbtgcc84ndsm50"
+                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbn9f6j4nb4.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-mbtgbwd3v05y0f.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasl-mbtgbh6s2hli47.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasj-mbtgcc84ndsm50.webp"
                 ],
                 shopee: "https://shopee.com.my/Tacticools-Shirt-ZTAC.APPAREL-i.178104872.43757444792"
             },
@@ -1522,7 +1319,7 @@
                 description: "Limited edition tactical shirt with traditional batik design. Combines cultural heritage with modern functionality.",
                 images: [
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasl-maf6zyfo69pmb2.webp",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasi-maf6zyfo7oa25a"
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasi-maf6zyfo7oa25a.webp"
                 ],
                 shopee: "https://shopee.com.my/Batik-Tacticool-TS-(Limited-Edition)-i.178104872.43102805888"
             },
@@ -1530,9 +1327,9 @@
                 title: "Alpha Pouch - Outdoor (IFAK/GENEREL PURPOSE) Pouch",
                 description: "Versatile outdoor pouch for IFAK or general purpose use. Durable materials with multiple attachment options.",
                 images: [
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasd-mbkslf18la6pbf",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rash-mbks5z542n0pba",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-mbks5z0o94w951"
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasd-mbkslf18la6pbf.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rash-mbks5z542n0pba.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-mbks5z0o94w951.webp"
                 ],
                 shopee: "https://shopee.com.my/Alpha-Pouch-Outdoor-(IFAK-GENEREL-PURPOSE)-Pouch-i.178104872.43256610551"
             },
@@ -1540,220 +1337,115 @@
                 title: "ZTC.FXTROT Active Gear Vest – Sesuai untuk Outdoor & Kecergasan",
                 description: "Active gear vest suitable for outdoor & fitness activities. Lightweight yet durable with multiple compartments.",
                 images: [
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9ls2sxd22udff",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-m9ls2sxd3hetab",
-                    "https://down-my.img.susercontent.com/file/my-11134207-7rasa-m9b65nb76vqs7b"
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9ls2sxd22udff.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7ras9-m9ls2sxd3hetab.webp",
+                    "https://down-my.img.susercontent.com/file/my-11134207-7rasa-m9b65nb76vqs7b.webp"
                 ],
                 shopee: "https://shopee.com.my/ZTC.FXTROT-Active-Gear-Vest-%E2%80%93-Sesuai-untuk-Outdoor-Kecergasan-i.178104872.41700453189"
             }
         };
-
-        // Update dots navigation
-    function updateDots() {
-        dotsContainer.innerHTML = '';
-        if (!currentProduct) return;
         
-        currentProduct.images.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.className = `instagram-dot ${index === currentSlideIndex ? 'active' : ''}`;
-            dot.addEventListener('click', () => showSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-    }
-
-    // Show specific slide
-    function showSlide(index) {
-        productSlides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-                slide.style.display = 'block';
-            } else {
-                slide.classList.remove('active');
-                slide.style.display = 'none';
-            }
-        });
-        
-        currentSlideIndex = index;
-        updateDots();
-        
-        // Update arrow visibility
-        prevBtn.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
-        nextBtn.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
-    }
-
-    // View Details button click handler
-    viewProductBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product');
-            currentProduct = products[productId];
-            
-            if (!currentProduct) return;
-            
-            currentSlideIndex = 0;
-            
-            // Update modal content
-            modalProductTitle.textContent = currentProduct.title;
-            modalProductDesc.textContent = currentProduct.description;
-            shopeeLink.href = currentProduct.shopee;
-            
-            // Reset and load slides
-            productSlides.forEach((slide, index) => {
-                slide.style.display = 'none';
-                slide.classList.remove('active');
-                
-                if (currentProduct.images[index]) {
-                    slide.querySelector('img').src = currentProduct.images[index];
-                }
-            });
-            
-            // Show first slide
-            showSlide(0);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    // Navigation handlers
-    prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showSlide(currentSlideIndex - 1);
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showSlide(currentSlideIndex + 1);
-    });
-
-    // Close modal
-    closeModal.addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-
-    // Close when clicking outside modal
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Ensure Shopee link opens in new tab
-    shopeeLink.addEventListener('click', function(e) {
-        if (!this.href || this.href === '#') {
-            e.preventDefault();
-        }
-        // target="_blank" in HTML handles new tab
-    });
-});
-
-        // Create Instagram-style navigation elements
-        const sliderContainer = document.querySelector('.product-slider');
-        const dotsContainer = document.createElement('div');
-        dotsContainer.className = 'instagram-dots';
-
-        // Create modern navigation arrows
-        sliderContainer.innerHTML += `
-            <div class="instagram-arrows">
-                <button class="instagram-arrow instagram-prev">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
-                <button class="instagram-arrow instagram-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
-            </div>
-        `;
-
-        sliderContainer.appendChild(dotsContainer);
-
-        const prevBtn = document.querySelector('.instagram-prev');
-        const nextBtn = document.querySelector('.instagram-next');
-
-        // Update dots navigation
-        function updateDots() {
-            dotsContainer.innerHTML = '';
-            if (!currentProduct) return;
-            
-            currentProduct.images.forEach((_, index) => {
-                const dot = document.createElement('span');
-                dot.className = `instagram-dot ${index === currentSlideIndex ? 'active' : ''}`;
-                dot.addEventListener('click', () => showSlide(index));
-                dotsContainer.appendChild(dot);
-            });
-        }
-
-        // Show specific slide
-        function showSlide(index) {
-            productSlides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            currentSlideIndex = index;
-            updateDots();
-            
-            // Update arrow visibility
-            prevBtn.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
-            nextBtn.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
-        }
-
-        // View Details button click handler
+        // Open modal with product data
         viewProductBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product');
-                if (!products[productId]) return;
-                
+            btn.addEventListener('click', () => {
+                const productId = btn.getAttribute('data-product');
                 currentProduct = products[productId];
                 currentSlideIndex = 0;
                 
-                // Update modal content
+                // Set product info
                 modalProductTitle.textContent = currentProduct.title;
                 modalProductDesc.textContent = currentProduct.description;
                 shopeeLink.href = currentProduct.shopee;
+                const shopeeLink = document.getElementById('shopee-link');
                 
-                // Reset slides
+                // Clear all slides first
                 productSlides.forEach(slide => {
+                    slide.style.display = 'none';
                     slide.classList.remove('active');
                     slide.querySelector('img').src = '';
                 });
                 
-                // Load product images
+                // Set images for current product
                 currentProduct.images.forEach((img, index) => {
-                    if (productSlides[index]) {
+                    if (index < productSlides.length) {
                         productSlides[index].querySelector('img').src = img;
+                        productSlides[index].style.display = 'block';
                     }
                 });
                 
                 // Show first slide
-                showSlide(0);
+                productSlides[0].classList.add('active');
+                updateSlideCounter();
+                
+                // Show modal
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
         });
-
-        // Navigation handlers
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const newIndex = Math.max(0, currentSlideIndex - 1);
-            showSlide(newIndex);
+        
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
-
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const newIndex = Math.min(currentProduct.images.length - 1, currentSlideIndex + 1);
-            showSlide(newIndex);
-        });
-
-        // Close when clicking outside modal
+        
+        // Close modal when clicking outside content
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         });
+        
+        // Replace your existing slider navigation code with this:
+            function showProductSlide(index) {
+            productSlides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+         });
+           currentSlideIndex = index;
+           updateSlideCounter();
+        }
 
+        function updateSlideCounter() {
+            if (currentProduct) {
+            slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
+        }
+        }
+        viewProductBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const productId = btn.getAttribute('data-product');
+    currentProduct = products[productId];
+    currentSlideIndex = 0;
+    
+    // Clear previous slides
+    productSlides.forEach(slide => {
+      slide.classList.remove('active');
+    });
+
+    // Load new images (only for available slides)
+    currentProduct.images.forEach((img, index) => {
+      if (productSlides[index]) {
+        productSlides[index].querySelector('img').src = img;
+      }
+    });
+
+    // Show first slide
+    showProductSlide(0);
+    modal.classList.add('active');
+  });
+});
+
+// Update prev/next button event listeners:
+prevSlideBtn.addEventListener('click', () => {
+  let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+  showProductSlide(newIndex);
+});
+
+nextSlideBtn.addEventListener('click', () => {
+  let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
+  showProductSlide(newIndex);
+});
+        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1770,10 +1462,10 @@
                 }
             });
         });
-
+        
         // Intersection Observer for fade-in animations
         const fadeElements = document.querySelectorAll('.fade-in');
-
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1782,7 +1474,7 @@
                 }
             });
         }, { threshold: 0.1 });
-
+        
         fadeElements.forEach(el => {
             el.style.opacity = 0;
             el.style.transform = 'translateY(20px)';
@@ -1790,138 +1482,55 @@
             observer.observe(el);
         });
 
-        // WhatsApp Form Submission
-        const whatsappForm = document.getElementById('whatsappForm');
-        const customerServiceNumber = "60143242247"; // Your number without + or -
+        document.getElementById('shopee-link').addEventListener('click', function(e) {
+  e.preventDefault(); // Stop default "#" behavior
+  window.open(this.href, '_blank'); // Force open in new tab
+});
 
-        whatsappForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const message = document.getElementById('message').value;
-            
-            // Format phone number (remove all non-digit characters)
-            const formattedPhone = phone.replace(/\D/g, '');
-            
-            // Create WhatsApp message
-            const whatsappMessage = `*New Message from ZTAC Precision Website*%0A%0A` +
-                                    `*Name:* ${name}%0A` +
-                                    `*Phone:* ${phone}%0A` +
-                                    (email ? `*Email:* ${email}%0A` : '') +
-                                    `*Message:*%0A${message}`;
-            
-            // Open WhatsApp with pre-filled message
-            window.open(`https://wa.me/${customerServiceNumber}?text=${whatsappMessage}`, '_blank');
-            
-            // Optional: Reset form after submission
-            whatsappForm.reset();
-        });
+viewProductBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const productId = btn.getAttribute('data-product');
+    currentProduct = products[productId];
+    shopeeLink.href = currentProduct.shopee; // Should update here
+    console.log('Shopee link set to:', shopeeLink.href); // Debug
+  });
+});
 
-        // Phone number formatting
-        const phoneInput = document.getElementById('phone');
-        phoneInput.addEventListener('input', function(e) {
-            // Format as +60 12-345 6789
-            let value = this.value.replace(/\D/g, '');
-            if (value.startsWith('60')) {
-                value = '+' + value;
-            }
-            if (value.length > 3) {
-                value = value.substring(0, 3) + ' ' + value.substring(3);
-            }
-            if (value.length > 7) {
-                value = value.substring(0, 7) + '-' + value.substring(7);
-            }
-            if (value.length > 11) {
-                value = value.substring(0, 11) + ' ' + value.substring(11);
-            }
-            this.value = value.substring(0, 15);
-        });
+// ANTI MANUSIA PENIRU // 
+document.addEventListener('DOMContentLoaded', function() {
+  // Disable right-click (context menu)
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        // Security/Protection Features
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
+  // Disable image dragging
+  document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.addEventListener('dragstart', (e) => e.preventDefault());
+  });
 
-        document.querySelectorAll('img').forEach(img => {
-            img.setAttribute('draggable', 'false');
-            img.addEventListener('dragstart', (e) => e.preventDefault());
-        });
+  // Disable text selection
+  document.addEventListener('selectstart', (e) => e.preventDefault());
+  document.styleSheets[0].insertRule(`
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  `, 0);
 
-        document.addEventListener('keydown', (e) => {
-            // Disable various keyboard shortcuts
-            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
-            if (e.key === 'F12') e.preventDefault();
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) e.preventDefault();
-            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) e.preventDefault();
-            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
-        });
+  // Disable keyboard shortcuts (Ctrl+C, Ctrl+U, etc.)
+  document.addEventListener('keydown', (e) => {
+    // Ctrl + U (View Source)
+    if (e.ctrlKey && e.key === 'u') e.preventDefault();
+    // Ctrl + Shift + I / F12 (DevTools)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+    // Ctrl + C (Copy)
+    if (e.ctrlKey && e.key === 'c') e.preventDefault();
+    // Ctrl + P (Print)
+    if (e.ctrlKey && e.key === 'p') e.preventDefault();
+  });
+});
     </script>
-<script>
-    // Dark Mode Toggle
-    const toggleDarkMode = document.getElementById("dark-mode-toggle");
-    const htmlEl = document.documentElement;
-    const icon = toggleDarkMode.querySelector("i");
-
-    toggleDarkMode.addEventListener("click", () => {
-        const isDark = htmlEl.getAttribute("data-theme") === "dark";
-        htmlEl.setAttribute("data-theme", isDark ? "light" : "dark");
-        icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
-    });
-    </script><script>
-let currentHeroIndex = 0;
-let heroSlides = document.querySelectorAll('.hero-slide');
-let heroDots = document.querySelectorAll('.dot');
-let heroVideo = document.querySelector('.hero-video');
-let heroTimer;
-
-function showHeroSlide(index) {
-    heroSlides.forEach((slide, i) => {
-        slide.style.display = i === index ? 'block' : 'none';
-        heroDots[i].classList.toggle('active', i === index);
-    });
-    currentHeroIndex = index;
-}
-
-function playHeroSequence() {
-    if (heroVideo) {
-        heroVideo.currentTime = 0;
-        heroVideo.play();
-        showHeroSlide(0);
-        setTimeout(() => {
-            heroVideo.pause();
-            startImageSlides(1);
-        }, 25000);
-    }
-}
-
-function startImageSlides(startIndex) {
-    let i = startIndex;
-    function nextImageSlide() {
-        if (i >= heroSlides.length) {
-            playHeroSequence(); // replay video
-            return;
-        }
-        showHeroSlide(i);
-        i++;
-        heroTimer = setTimeout(nextImageSlide, 6000);
-    }
-    nextImageSlide();
-}
-
-heroDots.forEach((dot, idx) => {
-    dot.addEventListener('click', () => {
-        clearTimeout(heroTimer);
-        showHeroSlide(idx);
-        if (idx === 0) {
-            playHeroSequence();
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    playHeroSequence();
-});
-</script></body>
+</body>
 </html>
