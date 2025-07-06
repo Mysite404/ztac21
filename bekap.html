@@ -1004,79 +1004,240 @@
         display: none !important;
     }
     
-    /* Instagram Style Modal Navigation */
-    .instagram-nav {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 10;
-    }
+/* Instagram Style Modal */
+.instagram-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
-    .instagram-arrow {
-        pointer-events: all;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.9);
-        backdrop-filter: blur(5px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        opacity: 0.9;
-    }
+.instagram-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
 
-    .instagram-prev {
-        left: 20px;
-    }
+.instagram-container {
+  width: 90%;
+  max-width: 800px;
+  height: 80vh;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
-    .instagram-next {
-        right: 20px;
-    }
+.instagram-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 1/1;
+}
 
-    .instagram-arrow:hover {
-        background: rgba(255,255,255,1);
-        transform: translateY(-50%) scale(1.1);
-    }
+.instagram-slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
 
-    .instagram-arrow svg {
-        width: 20px;
-        height: 20px;
-    }
+.instagram-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .instagram-dots {
-        position: absolute;
-        bottom: 20px;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        pointer-events: all;
-    }
+.instagram-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
-    .instagram-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.5);
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
+.instagram-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  opacity: 0.9;
+  z-index: 10;
+}
 
-    .instagram-dot.active {
-        background: #fff;
-        transform: scale(1.3);
-    }
+.instagram-prev {
+  left: 20px;
+}
+
+.instagram-next {
+  right: 20px;
+}
+
+.instagram-arrow:hover {
+  background: rgba(255,255,255,1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.instagram-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.instagram-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 20;
+  color: white;
+}
+
+.instagram-close:hover {
+  background: rgba(0,0,0,0.8);
+  transform: scale(1.1);
+}
+
+.instagram-info {
+  padding: 20px;
+  background: var(--card-bg);
+}
+
+.instagram-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.instagram-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.instagram-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.instagram-content p {
+  margin-bottom: 20px;
+  color: var(--text);
+  opacity: 0.9;
+}
+
+.instagram-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.instagram-like {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.instagram-like:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.instagram-like.liked {
+  color: #ff3e3e;
+}
+
+.instagram-shop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+}
+
+.instagram-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.instagram-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.instagram-dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .instagram-container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+  
+  .instagram-arrow {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .instagram-close {
+    top: 10px;
+    right: 10px;
+  }
+}
 
     /* Product Slide Styling */
     .product-slide {
@@ -1253,40 +1414,64 @@
 </section>
 <!-- Product Modal -->
 <div class="modal" id="productModal">
-<div class="modal-content card">
-<button class="close-modal">×</button>
-<div class="product-slider">
-<div class="product-slide active">
-<img alt="Product Image 1" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 2" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 3" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 4" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 5" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 6" src=""/>
-</div>
-<div class="product-slide">
-<img alt="Product Image 7" src=""/>
-</div>
-</div>
-<h3 id="modal-product-title"></h3>
-<p id="modal-product-desc"></p>
-<div class="slider-nav">
-<button class="prev-slide">&lt;</button>
-<span id="slide-counter">1/1</span>
-<button class="next-slide">&gt;</button>
-</div>
-<a class="btn" href="#" id="shopee-link" target="_blank">View on Shopee</a>
-</div>
+  <div class="instagram-modal">
+    <div class="instagram-container">
+      <!-- Close Button -->
+      <button class="close-modal instagram-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      
+      <!-- Image Slider -->
+      <div class="instagram-slider">
+        <div class="instagram-slides"></div>
+        
+        <!-- Navigation Arrows -->
+        <button class="instagram-arrow instagram-prev">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <button class="instagram-arrow instagram-next">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Product Info Section -->
+      <div class="instagram-info">
+        <div class="instagram-header">
+          <div class="instagram-profile">
+            <img src="assets/img/favicon.png" alt="ZTAC Profile" class="profile-pic">
+            <span>ZTAC Precision</span>
+          </div>
+        </div>
+        
+        <div class="instagram-content">
+          <h3 id="modal-product-title"></h3>
+          <p id="modal-product-desc"></p>
+          <div class="instagram-actions">
+            <button class="instagram-like">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </button>
+            <a class="btn instagram-shop" href="#" id="shopee-link" target="_blank">
+              Shop Now
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V11H19V6.413L11.207 14.207L9.793 12.793L17.585 5H13V3H21Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Dots Navigation -->
+        <div class="instagram-dots"></div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Projects Section -->
 <section class="projects" id="projects">
