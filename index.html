@@ -1475,7 +1475,7 @@
     </div>
     
     <script>
-        // Product Modal with Instagram-style navigation - Fixed Version
+    // Product Modal with Instagram-style navigation - Fixed Version
     document.addEventListener('DOMContentLoaded', function() {
         // Product Modal Elements
         const modal = document.getElementById('productModal');
@@ -1490,26 +1490,24 @@
         let currentProduct = null;
         let currentSlideIndex = 0;
 
-        // Remove old navigation if exists
-        const oldNav = document.querySelector('.slider-nav');
-        if (oldNav) oldNav.remove();
-
-        // Create Instagram-style navigation
-        sliderContainer.innerHTML += `
-            <div class="instagram-nav">
-                <button class="instagram-arrow instagram-prev">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
-                <div class="instagram-dots"></div>
-                <button class="instagram-arrow instagram-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
-            </div>
-        `;
+        // Create Instagram-style navigation if it doesn't exist
+        if (!document.querySelector('.instagram-nav')) {
+            sliderContainer.innerHTML += `
+                <div class="instagram-nav">
+                    <button class="instagram-arrow instagram-prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="instagram-dots"></div>
+                    <button class="instagram-arrow instagram-next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }
 
         const dotsContainer = document.querySelector('.instagram-dots');
         const prevBtn = document.querySelector('.instagram-prev');
@@ -1587,131 +1585,6 @@
         };
 
         // Update dots navigation
-    function updateDots() {
-        dotsContainer.innerHTML = '';
-        if (!currentProduct) return;
-        
-        currentProduct.images.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.className = `instagram-dot ${index === currentSlideIndex ? 'active' : ''}`;
-            dot.addEventListener('click', () => showSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-    }
-
-    // Show specific slide
-    function showSlide(index) {
-        productSlides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-                slide.style.display = 'block';
-            } else {
-                slide.classList.remove('active');
-                slide.style.display = 'none';
-            }
-        });
-        
-        currentSlideIndex = index;
-        updateDots();
-        
-        // Update arrow visibility
-        prevBtn.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
-        nextBtn.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
-    }
-
-    // View Details button click handler
-    viewProductBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product');
-            currentProduct = products[productId];
-            
-            if (!currentProduct) return;
-            
-            currentSlideIndex = 0;
-            
-            // Update modal content
-            modalProductTitle.textContent = currentProduct.title;
-            modalProductDesc.textContent = currentProduct.description;
-            shopeeLink.href = currentProduct.shopee;
-            
-            // Reset and load slides
-            productSlides.forEach((slide, index) => {
-                slide.style.display = 'none';
-                slide.classList.remove('active');
-                
-                if (currentProduct.images[index]) {
-                    slide.querySelector('img').src = currentProduct.images[index];
-                }
-            });
-            
-            // Show first slide
-            showSlide(0);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    // Navigation handlers
-    prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showSlide(currentSlideIndex - 1);
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showSlide(currentSlideIndex + 1);
-    });
-
-    // Close modal
-    closeModal.addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-
-    // Close when clicking outside modal
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Ensure Shopee link opens in new tab
-    shopeeLink.addEventListener('click', function(e) {
-        if (!this.href || this.href === '#') {
-            e.preventDefault();
-        }
-        // target="_blank" in HTML handles new tab
-    });
-});
-
-        // Create Instagram-style navigation elements
-        const sliderContainer = document.querySelector('.product-slider');
-        const dotsContainer = document.createElement('div');
-        dotsContainer.className = 'instagram-dots';
-
-        // Create modern navigation arrows
-        sliderContainer.innerHTML += `
-            <div class="instagram-arrows">
-                <button class="instagram-arrow instagram-prev">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
-                <button class="instagram-arrow instagram-next">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
-            </div>
-        `;
-
-        sliderContainer.appendChild(dotsContainer);
-
-        const prevBtn = document.querySelector('.instagram-prev');
-        const nextBtn = document.querySelector('.instagram-next');
-
-        // Update dots navigation
         function updateDots() {
             dotsContainer.innerHTML = '';
             if (!currentProduct) return;
@@ -1727,8 +1600,15 @@
         // Show specific slide
         function showSlide(index) {
             productSlides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
+                if (i === index) {
+                    slide.classList.add('active');
+                    slide.style.display = 'block';
+                } else {
+                    slide.classList.remove('active');
+                    slide.style.display = 'none';
+                }
             });
+            
             currentSlideIndex = index;
             updateDots();
             
@@ -1741,9 +1621,10 @@
         viewProductBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const productId = this.getAttribute('data-product');
-                if (!products[productId]) return;
-                
                 currentProduct = products[productId];
+                
+                if (!currentProduct) return;
+                
                 currentSlideIndex = 0;
                 
                 // Update modal content
@@ -1751,16 +1632,13 @@
                 modalProductDesc.textContent = currentProduct.description;
                 shopeeLink.href = currentProduct.shopee;
                 
-                // Reset slides
-                productSlides.forEach(slide => {
+                // Reset and load slides
+                productSlides.forEach((slide, index) => {
+                    slide.style.display = 'none';
                     slide.classList.remove('active');
-                    slide.querySelector('img').src = '';
-                });
-                
-                // Load product images
-                currentProduct.images.forEach((img, index) => {
-                    if (productSlides[index]) {
-                        productSlides[index].querySelector('img').src = img;
+                    
+                    if (currentProduct.images[index]) {
+                        slide.querySelector('img').src = currentProduct.images[index];
                     }
                 });
                 
@@ -1774,14 +1652,18 @@
         // Navigation handlers
         prevBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const newIndex = Math.max(0, currentSlideIndex - 1);
-            showSlide(newIndex);
+            showSlide(currentSlideIndex - 1);
         });
 
         nextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const newIndex = Math.min(currentProduct.images.length - 1, currentSlideIndex + 1);
-            showSlide(newIndex);
+            showSlide(currentSlideIndex + 1);
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
         });
 
         // Close when clicking outside modal
@@ -1789,6 +1671,13 @@
             if (e.target === modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Ensure Shopee link opens in new tab
+        shopeeLink.addEventListener('click', function(e) {
+            if (!this.href || this.href === '#') {
+                e.preventDefault();
             }
         });
 
@@ -1895,6 +1784,7 @@
             if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) e.preventDefault();
             if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
         });
-    </script>
+    });
+</script>
 </body>
 </html>
