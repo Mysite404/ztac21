@@ -1475,9 +1475,65 @@
     </div>
     
     <script>
-    // Product Modal with Instagram-style navigation - Fixed Version
     document.addEventListener('DOMContentLoaded', function() {
-        // Product Modal Elements
+        // Theme Toggle Functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Apply saved theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Hero Slider Functionality
+        const heroSlides = document.querySelectorAll('.hero-slider .slide');
+        const heroDots = document.querySelectorAll('.slider-dots .dot');
+        let currentHeroSlide = 0;
+        let heroInterval;
+        
+        function showHeroSlide(index) {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            heroDots.forEach(dot => dot.classList.remove('active'));
+            
+            heroSlides[index].classList.add('active');
+            heroDots[index].classList.add('active');
+            currentHeroSlide = index;
+        }
+        
+        function nextHeroSlide() {
+            let nextIndex = (currentHeroSlide + 1) % heroSlides.length;
+            showHeroSlide(nextIndex);
+        }
+        
+        // Auto-rotate slides every 5 seconds
+        function startSlider() {
+            heroInterval = setInterval(nextHeroSlide, 5000);
+        }
+        
+        // Manual slide control with dots
+        heroDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(heroInterval);
+                showHeroSlide(index);
+                startSlider();
+            });
+        });
+        
+        // Start the slider
+        showHeroSlide(0);
+        startSlider();
+
+        // Product Modal Functionality
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
@@ -1638,7 +1694,11 @@
                     slide.classList.remove('active');
                     
                     if (currentProduct.images[index]) {
-                        slide.querySelector('img').src = currentProduct.images[index];
+                        const img = slide.querySelector('img');
+                        if (img) {
+                            img.src = currentProduct.images[index];
+                            img.alt = currentProduct.title + ' - Image ' + (index + 1);
+                        }
                     }
                 });
                 
@@ -1674,11 +1734,29 @@
             }
         });
 
-        // Ensure Shopee link opens in new tab
+        // Ensure Shopee link opens in new tab and has proper href
+        shopeeLink.setAttribute('target', '_blank');
         shopeeLink.addEventListener('click', function(e) {
             if (!this.href || this.href === '#') {
                 e.preventDefault();
             }
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
         });
 
         // Smooth scrolling for anchor links
@@ -1719,38 +1797,31 @@
 
         // WhatsApp Form Submission
         const whatsappForm = document.getElementById('whatsappForm');
-        const customerServiceNumber = "60143242247"; // Your number without + or -
+        const customerServiceNumber = "60143242247";
 
         whatsappForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const message = document.getElementById('message').value;
             
-            // Format phone number (remove all non-digit characters)
             const formattedPhone = phone.replace(/\D/g, '');
             
-            // Create WhatsApp message
             const whatsappMessage = `*New Message from ZTAC Precision Website*%0A%0A` +
                                     `*Name:* ${name}%0A` +
                                     `*Phone:* ${phone}%0A` +
                                     (email ? `*Email:* ${email}%0A` : '') +
                                     `*Message:*%0A${message}`;
             
-            // Open WhatsApp with pre-filled message
             window.open(`https://wa.me/${customerServiceNumber}?text=${whatsappMessage}`, '_blank');
-            
-            // Optional: Reset form after submission
             whatsappForm.reset();
         });
 
         // Phone number formatting
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', function(e) {
-            // Format as +60 12-345 6789
             let value = this.value.replace(/\D/g, '');
             if (value.startsWith('60')) {
                 value = '+' + value;
@@ -1776,13 +1847,9 @@
         });
 
         document.addEventListener('keydown', (e) => {
-            // Disable various keyboard shortcuts
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) e.preventDefault();
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
             if (e.key === 'F12') e.preventDefault();
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) e.preventDefault();
-            if (e.ctrlKey && (e.key === 'p' || e.key === 'P')) e.preventDefault();
-            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) e.preventDefault();
         });
     });
 </script>
