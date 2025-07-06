@@ -1480,31 +1480,42 @@
             }
         }
         
-        // UPDATED PRODUCT BUTTON CLICK HANDLER
-        viewProductBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const productId = btn.getAttribute('data-product');
-                currentProduct = products[productId];
-                currentSlideIndex = 0;
-                
-                // Update all product info including Shopee link
-                modalProductTitle.textContent = currentProduct.title;
-                modalProductDesc.textContent = currentProduct.description;
-                shopeeLink.href = currentProduct.shopee; // This is the crucial fix
-                
-                // Reset and load slides
-                productSlides.forEach(slide => slide.classList.remove('active'));
-                currentProduct.images.forEach((img, index) => {
-                    if (productSlides[index]) {
-                        productSlides[index].querySelector('img').src = img;
-                    }
-                });
+        // Product Modal Variables
+const modal = document.getElementById('productModal');
+const viewProductBtns = document.querySelectorAll('.view-product');
+// ... other variable declarations ...
 
-                showProductSlide(0);
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
+// Product Data
+const products = {
+    // ... your product data ...
+};
+
+// KEEP THIS SINGLE viewProductBtns.forEach BLOCK
+viewProductBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const productId = btn.getAttribute('data-product');
+        currentProduct = products[productId];
+        currentSlideIndex = 0;
+        
+        // Update all product info including Shopee link
+        modalProductTitle.textContent = currentProduct.title;
+        modalProductDesc.textContent = currentProduct.description;
+        shopeeLink.href = currentProduct.shopee;
+        
+        // Reset and load slides
+        productSlides.forEach(slide => slide.classList.remove('active'));
+        currentProduct.images.forEach((img, index) => {
+            if (productSlides[index]) {
+                productSlides[index].querySelector('img').src = img;
+            }
         });
+
+        showProductSlide(0);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
 
         // Open modal with product data
         viewProductBtns.forEach(btn => {
