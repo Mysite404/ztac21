@@ -1477,6 +1477,20 @@ nextSlideBtn.addEventListener('click', () => {
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+
+        document.getElementById('shopee-link').addEventListener('click', function(e) {
+  e.preventDefault(); // Stop default "#" behavior
+  window.open(this.href, '_blank'); // Force open in new tab
+});
+
+viewProductBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const productId = btn.getAttribute('data-product');
+    currentProduct = products[productId];
+    shopeeLink.href = currentProduct.shopee; // Should update here
+    console.log('Shopee link set to:', shopeeLink.href); // Debug
+  });
+});
     </script>
 </body>
 </html>
