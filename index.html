@@ -818,6 +818,16 @@
         .delay-3 {
             animation-delay: 0.6s;
         }
+
+        .product-slide {
+            display: none; /* Hide all slides by default */
+        }
+        .product-slide.active {
+            display: block; /* Only show the active slide */
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -982,7 +992,7 @@
                 <button class="next-slide">&gt;</button>
             </div>
 
-            <a href="#" class="btn" id="shopee-link" target="_blank">View on Shopee</a>
+            <a href="#" class="btn" id="shopee-link" target="_blank" rel="noopener noreferrer">View on Shopee</a>
         </div>
     </div>
     
@@ -1048,7 +1058,7 @@
     <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title">Our Story</h2>
+            <h2 class="section-title">About Us</h2>
             
             <div class="about-content">
                 <div class="about-text">
@@ -1254,7 +1264,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasg-m9lrhhvtj37kb1",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasm-m9lrhlzfj2tc13"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/TOPI-HUTAN-(ZTC.RIMBA)-Loreng-Tempatan-i.178104872.18393125335"
             },
             2: {
                 title: "BOONIE HAT RIMBA ZTAC",
@@ -1267,7 +1277,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7rask-mbkr4jccevgx8a",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasi-mbkr4jc2fa354b"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/BOONIE-HAT-RIMBA-ZTAC-i.178104872.18985766965"
             },
             3: {
                 title: "Tacticools Shirt -ZTAC.APPAREL",
@@ -1278,7 +1288,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasl-mbtgbh6s2hli47",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasj-mbtgcc84ndsm50"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/Tacticools-Shirt-ZTAC.APPAREL-i.178104872.43757444792"
             },
             4: {
                 title: "Batik Tacticool - TS (Limited Edition)",
@@ -1287,7 +1297,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasl-maf6zyfo69pmb2.webp",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasi-maf6zyfo7oa25a"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/Batik-Tacticool-TS-(Limited-Edition)-i.178104872.43102805888"
             },
             5: {
                 title: "Alpha Pouch - Outdoor (IFAK/GENEREL PURPOSE) Pouch",
@@ -1297,7 +1307,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7rash-mbks5z542n0pba",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasm-mbks5z0o94w951"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/Alpha-Pouch-Outdoor-(IFAK-GENEREL-PURPOSE)-Pouch-i.178104872.43256610551"
             },
             6: {
                 title: "ZTC.FXTROT Active Gear Vest – Sesuai untuk Outdoor & Kecergasan",
@@ -1307,7 +1317,7 @@
                     "https://down-my.img.susercontent.com/file/my-11134207-7ras9-m9ls2sxd3hetab",
                     "https://down-my.img.susercontent.com/file/my-11134207-7rasa-m9b65nb76vqs7b"
                 ],
-                shopee: "https://shopee.com.my/ztac21"
+                shopee: "https://shopee.com.my/ZTC.FXTROT-Active-Gear-Vest-%E2%80%93-Sesuai-untuk-Outdoor-Kecergasan-i.178104872.41700453189"
             }
         };
         
@@ -1322,6 +1332,7 @@
                 modalProductTitle.textContent = currentProduct.title;
                 modalProductDesc.textContent = currentProduct.description;
                 shopeeLink.href = currentProduct.shopee;
+                const shopeeLink = document.getElementById('shopee-link');
                 
                 // Clear all slides first
                 productSlides.forEach(slide => {
@@ -1362,29 +1373,54 @@
             }
         });
         
-        // Navigation between slides
-        function showProductSlide(index) {
-            productSlides.forEach(slide => slide.classList.remove('active'));
-            productSlides[index].classList.add('active');
-            currentSlideIndex = index;
-            updateSlideCounter();
+        // Replace your existing slider navigation code with this:
+            function showProductSlide(index) {
+            productSlides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+         });
+           currentSlideIndex = index;
+           updateSlideCounter();
         }
-        
+
         function updateSlideCounter() {
+            if (currentProduct) {
             slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
         }
-        
-        prevSlideBtn.addEventListener('click', () => {
-            let newIndex = currentSlideIndex - 1;
-            if (newIndex < 0) newIndex = currentProduct.images.length - 1;
-            showProductSlide(newIndex);
-        });
-        
-        nextSlideBtn.addEventListener('click', () => {
-            let newIndex = currentSlideIndex + 1;
-            if (newIndex >= currentProduct.images.length) newIndex = 0;
-            showProductSlide(newIndex);
-        });
+        }
+        viewProductBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const productId = btn.getAttribute('data-product');
+    currentProduct = products[productId];
+    currentSlideIndex = 0;
+    
+    // Clear previous slides
+    productSlides.forEach(slide => {
+      slide.classList.remove('active');
+    });
+
+    // Load new images (only for available slides)
+    currentProduct.images.forEach((img, index) => {
+      if (productSlides[index]) {
+        productSlides[index].querySelector('img').src = img;
+      }
+    });
+
+    // Show first slide
+    showProductSlide(0);
+    modal.classList.add('active');
+  });
+});
+
+// Update prev/next button event listeners:
+prevSlideBtn.addEventListener('click', () => {
+  let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+  showProductSlide(newIndex);
+});
+
+nextSlideBtn.addEventListener('click', () => {
+  let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
+  showProductSlide(newIndex);
+});
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
