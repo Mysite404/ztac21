@@ -1677,6 +1677,53 @@
             }
         };
 
+                document.addEventListener('DOMContentLoaded', function() {
+        // Debug: Confirm script is running
+        console.log('Modal script loaded!');
+
+        const modal = document.getElementById('productModal');
+        const viewProductBtns = document.querySelectorAll('.view-product');
+        const closeModal = document.querySelector('.ig-close-btn');
+        const slidesWrapper = document.querySelector('.ig-slides-wrapper');
+        
+        // Debug: Log elements
+        console.log({
+            modal,
+            viewProductBtns,
+            closeModal,
+            slidesWrapper
+        });
+
+        // 1. Verify buttons exist
+        if (viewProductBtns.length === 0) {
+            console.error('No "View Details" buttons found! Check HTML class names.');
+        }
+
+        // 2. Add click handlers
+        viewProductBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product');
+            console.log('Opening product ID:', productId);
+            
+            // 3. Verify product exists
+            if (!products[productId]) {
+                console.error('Product not found:', productId);
+                return;
+            }
+            
+            // 4. Open modal (add this line)
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal handler
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        });
+
         function createSlides(images) {
         slidesWrapper.innerHTML = '';
         dotsContainer.innerHTML = '';
@@ -1742,6 +1789,14 @@
             createSlides(currentProduct.images);
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Debug: Log when buttons are clicked
+            document.querySelectorAll('.view-product').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Button clicked! Product ID:', this.getAttribute('data-product'));
+            });
+            });
+
         });
     });
 
