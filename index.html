@@ -876,6 +876,39 @@
         .delay-3 {
             animation-delay: 0.6s;
         }
+
+    #shopee-link {
+        display: block;
+        margin-top: 25px;
+        background-color: var(--accent);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #shopee-link:hover {
+        background-color: #3a2a1e;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(74, 55, 40, 0.3);
+    }
+
+    #shopee-link::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V11H19V6.413L11.207 14.207L9.793 12.793L17.585 5H13V3H21Z'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+    }
+
+    #shopee-link:hover::after {
+        transform: translateY(-50%) translateX(3px);
+    }
+
     </style>
 </head>
 <body>
@@ -1379,20 +1412,37 @@
         });
 
         // Product Modal
-// Product Modal Variables
+        // Product Modal - Updated Version
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
         const productSlides = document.querySelectorAll('.product-slide');
-        const prevSlideBtn = document.querySelector('.prev-slide');
-        const nextSlideBtn = document.querySelector('.next-slide');
-        const slideCounter = document.getElementById('slide-counter');
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalProductDesc = document.getElementById('modal-product-desc');
         const shopeeLink = document.getElementById('shopee-link');
 
         let currentProduct = null;
         let currentSlideIndex = 0;
+
+        // Modern slider navigation elements
+        const sliderNav = document.createElement('div');
+        sliderNav.className = 'modern-slider-nav';
+        sliderNav.innerHTML = `
+            <button class="slider-arrow prev-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="slider-arrow next-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        `;
+        document.querySelector('.product-slider').appendChild(sliderNav);
+
+        const prevArrow = document.querySelector('.prev-arrow');
+        const nextArrow = document.querySelector('.next-arrow');
         
         // Product data
         const products = {
@@ -1466,60 +1516,63 @@
         };
         
         // Show specific slide
-        function showProductSlide(index) {
-            productSlides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            currentSlideIndex = index;
-            updateSlideCounter();
-        }
+function showProductSlide(index) {
+    productSlides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+    });
+    currentSlideIndex = index;
+    
+    // Update arrow visibility
+    prevArrow.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
+    nextArrow.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
+}
 
-        // Update slide counter
-        function updateSlideCounter() {
-            if (currentProduct) {
-                slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
+// View Details button click handler
+viewProductBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        const productId = this.getAttribute('data-product');
+        currentProduct = products[productId];
+        currentSlideIndex = 0;
+        
+        // Update modal content
+        modalProductTitle.textContent = currentProduct.title;
+        modalProductDesc.textContent = currentProduct.description;
+        shopeeLink.href = currentProduct.shopee;
+        
+        // Reset slides
+        productSlides.forEach(slide => {
+            slide.classList.remove('active');
+            slide.querySelector('img').src = '';
+        });
+        
+        // Load product images
+        currentProduct.images.forEach((img, index) => {
+            if (productSlides[index]) {
+                productSlides[index].querySelector('img').src = img;
             }
-        }
-
-        // View Details button click handler - THIS IS THE FIX
-        viewProductBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product');
-                if (!products[productId]) return;
-                
-                currentProduct = products[productId];
-                currentSlideIndex = 0;
-                
-                // Update modal content
-                modalProductTitle.textContent = currentProduct.title;
-                modalProductDesc.textContent = currentProduct.description;
-                shopeeLink.href = currentProduct.shopee || '#';
-                
-                // Reset slides
-                productSlides.forEach(slide => {
-                    slide.classList.remove('active');
-                    slide.querySelector('img').src = '';
-                });
-                
-                // Load product images
-                currentProduct.images.forEach((img, index) => {
-                    if (productSlides[index]) {
-                        productSlides[index].querySelector('img').src = img;
-                    }
-                });
-                
-                // Show first slide
-                showProductSlide(0);
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
         });
+        
+        // Show first slide
+        showProductSlide(0);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
 
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+// Navigation handlers
+prevArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const newIndex = Math.max(0, currentSlideIndex - 1);
+    showProductSlide(newIndex);
+});
+
+nextArrow.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const newIndex = Math.min(currentProduct.images.length - 1, currentSlideIndex + 1);
+    showProductSlide(newIndex);
+});
+
+// Close modal handlers remain the same...
 
         // Previous slide
         prevSlideBtn.addEventListener('click', () => {
