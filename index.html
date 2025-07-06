@@ -890,8 +890,10 @@
     <header>
         <div class="container">
             <nav>
-                <img style="width: 60px; padding: 0%; margin: 0%;" src="assets/img/favicon.png" alt="logo">
-                <a href="#" class="logo">ZTAC<span>Precision</span></a>
+                <a href="#" class="logo">
+                    <img style="width: 60px; padding-right: 10px;" src="assets/img/favicon.png" alt="logo">
+                    ZTAC<span>Precision</span>
+                </a>
                 
                 <div class="nav-links">
                     <a href="#home" aria-label="Home">Home</a>
@@ -1249,104 +1251,107 @@
     
     <script>
     class HeroSlider {
-        constructor() {
-            this.slides = document.querySelectorAll('.slide');
-            this.dots = document.querySelectorAll('.dot');
-            this.video = document.querySelector('.hero-video');
-            this.currentSlide = 0;
-            this.videoTimer = null;
-            this.videoStartTime = null;
-            this.videoDuration = 30000; // 30 seconds
-            this.imageSlideDuration = 5000; // 5 seconds
-            this.imageSlideInterval = null;
-            
-            this.init();
-        }
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.dots = document.querySelectorAll('.dot');
+        this.video = document.querySelector('.hero-video');
+        this.currentSlide = 0;
+        this.videoTimer = null;
+        this.videoDuration = 25000; // Changed to 25 seconds
+        this.imageSlideDuration = 5000; // 5 seconds
+        this.imageSlideInterval = null;
         
-        init() {
-            // Set up video
-            this.video.muted = true;
-            this.video.playsInline = true;
-            
-            // Start with video
+        this.init();
+    }
+    
+    init() {
+        // Set up video
+        this.video.muted = true;
+        this.video.playsInline = true;
+        
+        // Start with video
+        this.showSlide(0);
+        
+        // Set up dot navigation
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.handleDotClick(index));
+        });
+    }
+    
+    showSlide(index) {
+        // Hide all slides
+        this.slides.forEach(slide => slide.classList.remove('active'));
+        this.dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Show selected slide
+        this.slides[index].classList.add('active');
+        this.dots[index].classList.add('active');
+        this.currentSlide = index;
+        
+        // Handle video slide
+        if (index === 0) {
+            this.startVideo();
+        } else {
+            this.handleImageSlide();
+        }
+    }
+    
+    startVideo() {
+        // Clear any existing timers
+        clearTimeout(this.videoTimer);
+        clearInterval(this.imageSlideInterval);
+        
+        // Start or restart video
+        this.video.currentTime = 0;
+        this.video.play().catch(e => console.log("Video play error:", e));
+        
+        // Set timer to advance after full duration
+        this.videoTimer = setTimeout(() => {
+            this.showSlide(1);
+            this.startImageSlider();
+        }, this.videoDuration);
+    }
+    
+    handleImageSlide() {
+        // Pause video if we're not on video slide
+        this.video.pause();
+        
+        // Clear video timer
+        clearTimeout(this.videoTimer);
+    }
+    
+    startImageSlider() {
+        // Clear any existing interval
+        clearInterval(this.imageSlideInterval);
+        
+        // Start auto-advancing through images
+        this.imageSlideInterval = setInterval(() => {
+            let nextSlide = (this.currentSlide + 1) % this.slides.length;
+            if (nextSlide === 0) nextSlide = 1; // Skip video slide
+            this.showSlide(nextSlide);
+        }, this.imageSlideDuration);
+    }
+    
+    handleDotClick(index) {
+        if (index === 0) {
+            // Going back to video - restart it
             this.showSlide(0);
+        } else {
+            // Going to image - pause video and show image
+            this.showSlide(index);
             
-            // Set up dot navigation
-            this.dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => this.handleDotClick(index));
-            });
-        }
-        
-        showSlide(index) {
-            // Hide all slides
-            this.slides.forEach(slide => slide.classList.remove('active'));
-            this.dots.forEach(dot => dot.classList.remove('active'));
-            
-            // Show selected slide
-            this.slides[index].classList.add('active');
-            this.dots[index].classList.add('active');
-            this.currentSlide = index;
-            
-            // Handle video slide
-            if (index === 0) {
-                this.startVideo();
-            } else {
-                this.handleImageSlide();
-            }
-        }
-        
-        startVideo() {
-            // Clear any existing timers
-            clearTimeout(this.videoTimer);
-            clearInterval(this.imageSlideInterval);
-            
-            // Start or restart video
-            this.video.currentTime = 0;
-            this.videoStartTime = Date.now();
-            this.video.play().catch(e => console.log("Video play error:", e));
-            
-            // Set timer to advance after full duration
-            this.videoTimer = setTimeout(() => {
-                this.showSlide(1);
+            // If we were on video, start image slider
+            if (this.currentSlide === 0) {
                 this.startImageSlider();
-            }, this.videoDuration - (Date.now() - this.videoStartTime));
-        }
-        
-        handleImageSlide() {
-            // Pause video if we're not on video slide
-            this.video.pause();
-            
-            // Clear video timer
-            clearTimeout(this.videoTimer);
-        }
-        
-        startImageSlider() {
-            // Clear any existing interval
-            clearInterval(this.imageSlideInterval);
-            
-            // Start auto-advancing through images
-            this.imageSlideInterval = setInterval(() => {
-                let nextSlide = (this.currentSlide + 1) % this.slides.length;
-                if (nextSlide === 0) nextSlide = 1; // Skip video slide
-                this.showSlide(nextSlide);
-            }, this.imageSlideDuration);
-        }
-        
-        handleDotClick(index) {
-            if (index === 0) {
-                // Going back to video - restart it
-                this.showSlide(0);
-            } else {
-                // Going to image - pause video and show image
-                this.showSlide(index);
-                
-                // If we were on video, start image slider
-                if (this.currentSlide === 0) {
-                    this.startImageSlider();
-                }
             }
         }
     }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new HeroSlider();
+});
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -1668,39 +1673,44 @@ viewProductBtns.forEach(btn => {
 });
 
 // ANTI MANUSIA PENIRU // 
+// Security/Protection Features
 document.addEventListener('DOMContentLoaded', function() {
-  // Disable right-click (context menu)
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
+    // Disable right-click (context menu)
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-  // Disable image dragging
-  document.querySelectorAll('img').forEach(img => {
-    img.setAttribute('draggable', 'false');
-    img.addEventListener('dragstart', (e) => e.preventDefault());
-  });
+    // Disable image dragging
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', 'false');
+        img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
 
-  // Disable text selection
-  document.addEventListener('selectstart', (e) => e.preventDefault());
-  document.styleSheets[0].insertRule(`
-    * {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-  `, 0);
+    // Disable text selection
+    document.addEventListener('selectstart', (e) => e.preventDefault());
+    const style = document.createElement('style');
+    style.innerHTML = `
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    `;
+    document.head.appendChild(style);
 
-  // Disable keyboard shortcuts (Ctrl+C, Ctrl+U, etc.)
-  document.addEventListener('keydown', (e) => {
-    // Ctrl + U (View Source)
-    if (e.ctrlKey && e.key === 'u') e.preventDefault();
-    // Ctrl + Shift + I / F12 (DevTools)
-    if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
-    if (e.key === 'F12') e.preventDefault();
-    // Ctrl + C (Copy)
-    if (e.ctrlKey && e.key === 'c') e.preventDefault();
-    // Ctrl + P (Print)
-    if (e.ctrlKey && e.key === 'p') e.preventDefault();
-  });
+    // Disable keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Ctrl + U (View Source)
+        if (e.ctrlKey && e.key === 'u') e.preventDefault();
+        // Ctrl + Shift + I / F12 (DevTools)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) e.preventDefault();
+        if (e.key === 'F12') e.preventDefault();
+        // Ctrl + C (Copy)
+        if (e.ctrlKey && e.key === 'c') e.preventDefault();
+        // Ctrl + P (Print)
+        if (e.ctrlKey && e.key === 'p') e.preventDefault();
+        // Ctrl + S (Save)
+        if (e.ctrlKey && e.key === 's') e.preventDefault();
+    });
 });
 
 // WHATSAPP FORM // 
