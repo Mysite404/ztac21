@@ -1005,116 +1005,119 @@
     }
     
     /* Instagram Style Modal Navigation */
-.instagram-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-}
+    .instagram-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+    }
 
-.instagram-arrow {
-    pointer-events: all;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.9;
-}
-
-.instagram-prev {
-    left: 20px;
-}
-
-.instagram-next {
-    right: 20px;
-}
-
-.instagram-arrow:hover {
-    background: rgba(255,255,255,1);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.instagram-arrow svg {
-    width: 20px;
-    height: 20px;
-}
-
-.instagram-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    pointer-events: all;
-}
-
-.instagram-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.instagram-dot.active {
-    background: #fff;
-    transform: scale(1.3);
-}
-
-/* Product Slide Styling */
-.product-slide {
-    display: none;
-    text-align: center;
-    height: 100%;
-}
-
-.product-slide.active {
-    display: block;
-}
-
-.product-slide img {
-    max-height: 500px;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    display: block;
-}
-
-/* Remove old navigation */
-.slider-nav {
-    display: none !important;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
     .instagram-arrow {
-        width: 36px;
-        height: 36px;
+        pointer-events: all;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.9;
     }
-    
-    .instagram-dots {
-        bottom: 15px;
-    }
-}
 
+    .instagram-prev {
+        left: 20px;
+    }
+
+    .instagram-next {
+        right: 20px;
+    }
+
+    .instagram-arrow:hover {
+        background: rgba(255,255,255,1);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .instagram-arrow svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .instagram-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        pointer-events: all;
+    }
+
+    .instagram-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.5);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .instagram-dot.active {
+        background: #fff;
+        transform: scale(1.3);
+    }
+
+    /* Product Slide Styling */
+    .product-slide {
+        display: none;
+        text-align: center;
+        height: 100%;
+    }
+
+    .product-slide.active {
+        display: block;
+    }
+
+    .product-slide img {
+        max-height: 500px;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 10px;
+        display: block;
+    }
+
+    /* Remove old navigation */
+    .slider-nav {
+        display: none !important;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .instagram-arrow {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .instagram-dots {
+            bottom: 15px;
+        }
+    }
+
+    .slide {
+    transition: opacity 1s ease;
+    }
     </style>
 </head>
 <body>
@@ -1155,7 +1158,7 @@
 <div class="hero-slider">
 <!-- Video as first slide -->
 <div class="slide slide-video active">
-<video autoplay="" class="hero-video" loop="" muted="" playsinline="">
+<video autoplay class="hero-video" loop muted playsinline preload="auto">
 <source src="/assets/vid/vid.mp4" type="video/mp4"/>
                     Your browser does not support HTML5 video.
                 </video>
@@ -1860,68 +1863,112 @@
     </script>
 <script>
     // Dark Mode Toggle
-    const toggleDarkMode = document.getElementById("dark-mode-toggle");
-    const htmlEl = document.documentElement;
-    const icon = toggleDarkMode.querySelector("i");
+const themeToggle = document.querySelector('.theme-toggle');
+const htmlEl = document.documentElement;
+const icon = themeToggle.querySelector("i");
 
-    toggleDarkMode.addEventListener("click", () => {
-        const isDark = htmlEl.getAttribute("data-theme") === "dark";
-        htmlEl.setAttribute("data-theme", isDark ? "light" : "dark");
-        icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
-    });
-    </script><script>
+themeToggle.addEventListener("click", () => {
+    const isDark = htmlEl.getAttribute("data-theme") === "dark";
+    htmlEl.setAttribute("data-theme", isDark ? "light" : "dark");
+    localStorage.setItem("theme", isDark ? "light" : "dark");
+    icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+});
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem("theme") || "light";
+htmlEl.setAttribute("data-theme", savedTheme);
+themeToggle.querySelector("i").className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    </script>
+    
+    <script>
 let currentHeroIndex = 0;
-let heroSlides = document.querySelectorAll('.hero-slide');
-let heroDots = document.querySelectorAll('.dot');
+let heroSlides = document.querySelectorAll('.hero-slider .slide');
+let heroDots = document.querySelectorAll('.slider-dots .dot');
 let heroVideo = document.querySelector('.hero-video');
 let heroTimer;
+let isVideoPlaying = false;
 
 function showHeroSlide(index) {
+    // Reset all slides
     heroSlides.forEach((slide, i) => {
-        slide.style.display = i === index ? 'block' : 'none';
-        heroDots[i].classList.toggle('active', i === index);
+        slide.classList.remove('active');
+        heroDots[i].classList.remove('active');
     });
+    
+    // Show selected slide
+    heroSlides[index].classList.add('active');
+    heroDots[index].classList.add('active');
     currentHeroIndex = index;
-}
-
-function playHeroSequence() {
-    if (heroVideo) {
-        heroVideo.currentTime = 0;
-        heroVideo.play();
-        showHeroSlide(0);
-        setTimeout(() => {
-            heroVideo.pause();
-            startImageSlides(1);
-        }, 25000);
-    }
-}
-
-function startImageSlides(startIndex) {
-    let i = startIndex;
-    function nextImageSlide() {
-        if (i >= heroSlides.length) {
-            playHeroSequence(); // replay video
-            return;
+    
+    // Handle video play/pause
+    if (index === 0) {
+        if (heroVideo) {
+            heroVideo.currentTime = 0;
+            heroVideo.play();
+            isVideoPlaying = true;
         }
-        showHeroSlide(i);
-        i++;
-        heroTimer = setTimeout(nextImageSlide, 6000);
+    } else {
+        if (heroVideo && isVideoPlaying) {
+            heroVideo.pause();
+            isVideoPlaying = false;
+        }
     }
-    nextImageSlide();
 }
 
+function startSlideshow() {
+    clearTimeout(heroTimer);
+    
+    // Calculate next index
+    let nextIndex = (currentHeroIndex + 1) % heroSlides.length;
+    
+    // If we're at the last image, next should be video (index 0)
+    if (currentHeroIndex === heroSlides.length - 1) {
+        nextIndex = 0;
+    }
+    
+    showHeroSlide(nextIndex);
+    
+    // Set different timing for video vs images
+    if (nextIndex === 0) {
+        // Video slide - show for 25 seconds
+        heroTimer = setTimeout(startSlideshow, 25000);
+    } else {
+        // Image slide - show for 6 seconds
+        heroTimer = setTimeout(startSlideshow, 6000);
+    }
+}
+
+// Dot click handlers
 heroDots.forEach((dot, idx) => {
     dot.addEventListener('click', () => {
         clearTimeout(heroTimer);
         showHeroSlide(idx);
+        
+        // Restart slideshow timer
         if (idx === 0) {
-            playHeroSequence();
+            heroTimer = setTimeout(startSlideshow, 25000);
+        } else {
+            heroTimer = setTimeout(startSlideshow, 6000);
         }
     });
 });
 
+// Initialize
 document.addEventListener("DOMContentLoaded", () => {
-    playHeroSequence();
+    // Start with video
+    showHeroSlide(0);
+    
+    // Start slideshow after video ends
+    if (heroVideo) {
+        heroVideo.addEventListener('ended', () => {
+            startSlideshow();
+        });
+    }
+    
+    // Initial timer for video slide
+    heroTimer = setTimeout(startSlideshow, 25000);
 });
-</script></body>
+</script>
+
+</body>
 </html>
