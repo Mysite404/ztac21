@@ -1264,23 +1264,88 @@
             });
         });
         
-        // Hero Slider
+        // Hero Slider - Improved version
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         let currentSlide = 0;
-        
-        function showSlide(index) {
+        let videoTimer;
+        let videoStartedAt;
+        let isVideoPlaying = false;
+
+        function showSlide(index, isManualNavigation = false) {
+            // Clear any existing timer
+            clearTimeout(videoTimer);
+            
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
             
             slides[index].classList.add('active');
             dots[index].classList.add('active');
             currentSlide = index;
+            
+            // Handle video slide
+            if (index === 0) {
+                const video = document.querySelector('.hero-video');
+                
+                if (isManualNavigation) {
+                    // User manually returned to video - restart it
+                    video.currentTime = 0;
+                    videoStartedAt = Date.now();
+                    isVideoPlaying = true;
+                    video.play().catch(e => console.log("Video play error:", e));
+                    
+                    // Set timer for remaining duration
+                    const elapsed = 0;
+                    const remaining = 30000 - elapsed;
+                    videoTimer = setTimeout(() => {
+                        showSlide(1);
+                        startImageSlider();
+                    }, remaining);
+                } else {
+                    // Initial video load
+                    videoStartedAt = Date.now();
+                    isVideoPlaying = true;
+                    video.play().catch(e => console.log("Video play error:", e));
+                    videoTimer = setTimeout(() => {
+                        showSlide(1);
+                        startImageSlider();
+                    }, 30000);
+                }
+            } else {
+                // Image slide - pause video if it was playing
+                if (isVideoPlaying) {
+                    const video = document.querySelector('.hero-video');
+                    video.pause();
+                    isVideoPlaying = false;
+                }
+            }
         }
-        
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
+
+        function startImageSlider() {
+            // This will be called after video completes
+            setInterval(() => {
+                if (currentSlide === 0) return; // Don't auto-advance from video
+                
+                let nextSlide = (currentSlide + 1) % slides.length;
+                if (nextSlide === 0) nextSlide = 1; // Skip back to first image
+                showSlide(nextSlide);
+            }, 5000); // 5 seconds for image slides
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('.hero-video');
+            video.muted = true;
+            video.playsInline = true;
+            
+            // Start with video
+            showSlide(0);
+            
+            // Manual dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index, true);
+                });
             });
         });
         
@@ -1695,6 +1760,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
 
     </script>
 </body>
