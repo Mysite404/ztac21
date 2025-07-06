@@ -1379,6 +1379,7 @@
         });
 
         // Product Modal
+// Product Modal Variables
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
@@ -1464,8 +1465,7 @@
             }
         };
         
-        // Show product slide
-        // Show product slide
+        // Show specific slide
         function showProductSlide(index) {
             productSlides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === index);
@@ -1474,86 +1474,68 @@
             updateSlideCounter();
         }
 
+        // Update slide counter
         function updateSlideCounter() {
             if (currentProduct) {
                 slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
             }
         }
-        
-        // Product Modal Variables
-        const modal = document.getElementById('productModal');
-        const viewProductBtns = document.querySelectorAll('.view-product');
-        // ... other variable declarations ...
 
-        // Product Data
-        const products = {
-            // ... your product data ...
-        };
-
-        // KEEP THIS SINGLE viewProductBtns.forEach BLOCK
+        // View Details button click handler - THIS IS THE FIX
         viewProductBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const productId = btn.getAttribute('data-product');
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product');
+                if (!products[productId]) return;
+                
                 currentProduct = products[productId];
                 currentSlideIndex = 0;
                 
-                // Update all product info including Shopee link
+                // Update modal content
                 modalProductTitle.textContent = currentProduct.title;
                 modalProductDesc.textContent = currentProduct.description;
-                shopeeLink.href = currentProduct.shopee;
+                shopeeLink.href = currentProduct.shopee || '#';
                 
-                // Reset and load slides
-                productSlides.forEach(slide => slide.classList.remove('active'));
-                currentProduct.images.forEach((img, index) => {
-                    if (productSlides[index]) {
-                        productSlides[index].querySelector('img').src = img;
-                    }
-                });
-
-                showProductSlide(0);
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-
-        // Open modal with product data
-        viewProductBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const productId = btn.getAttribute('data-product');
-                currentProduct = products[productId];
-                
-                // Set product info
-                modalProductTitle.textContent = currentProduct.title;
-                modalProductDesc.textContent = currentProduct.description;
-                shopeeLink.href = currentProduct.shopee;
-                
-                // Clear all slides first
+                // Reset slides
                 productSlides.forEach(slide => {
                     slide.classList.remove('active');
+                    slide.querySelector('img').src = '';
                 });
-
-                // Load images for current product
+                
+                // Load product images
                 currentProduct.images.forEach((img, index) => {
                     if (productSlides[index]) {
                         productSlides[index].querySelector('img').src = img;
                     }
                 });
-
+                
                 // Show first slide
                 showProductSlide(0);
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
         });
-        
+
         // Close modal
         closeModal.addEventListener('click', () => {
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         });
-        
-        // Close modal when clicking outside content
+
+        // Previous slide
+        prevSlideBtn.addEventListener('click', () => {
+            if (!currentProduct) return;
+            const newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
+
+        // Next slide
+        nextSlideBtn.addEventListener('click', () => {
+            if (!currentProduct) return;
+            const newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
+
+        // Close when clicking outside modal
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
