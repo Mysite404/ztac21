@@ -1107,8 +1107,7 @@
                 </div>
                 
                 <div class="about-img">
-                    <!-- TODO: Replace with actual about image -->
-                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="ZTAC Team">
+                    <img src="assets/img/imgstaff.png" alt="ZTAC Team">
                 </div>
             </div>
         </div>
@@ -1494,6 +1493,42 @@ viewProductBtns.forEach(btn => {
     currentProduct = products[productId];
     shopeeLink.href = currentProduct.shopee; // Should update here
     console.log('Shopee link set to:', shopeeLink.href); // Debug
+  });
+});
+
+// ANTI MANUSIA PENIRU // 
+document.addEventListener('DOMContentLoaded', function() {
+  // Disable right-click (context menu)
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // Disable image dragging
+  document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+
+  // Disable text selection
+  document.addEventListener('selectstart', (e) => e.preventDefault());
+  document.styleSheets[0].insertRule(`
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  `, 0);
+
+  // Disable keyboard shortcuts (Ctrl+C, Ctrl+U, etc.)
+  document.addEventListener('keydown', (e) => {
+    // Ctrl + U (View Source)
+    if (e.ctrlKey && e.key === 'u') e.preventDefault();
+    // Ctrl + Shift + I / F12 (DevTools)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+    // Ctrl + C (Copy)
+    if (e.ctrlKey && e.key === 'c') e.preventDefault();
+    // Ctrl + P (Print)
+    if (e.ctrlKey && e.key === 'p') e.preventDefault();
   });
 });
     </script>
