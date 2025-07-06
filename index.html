@@ -1003,6 +1003,117 @@
         display: none !important;
     }
     
+    /* Instagram Style Modal Navigation */
+.instagram-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.instagram-arrow {
+    pointer-events: all;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.9;
+}
+
+.instagram-prev {
+    left: 20px;
+}
+
+.instagram-next {
+    right: 20px;
+}
+
+.instagram-arrow:hover {
+    background: rgba(255,255,255,1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.instagram-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+.instagram-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    pointer-events: all;
+}
+
+.instagram-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.instagram-dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+/* Product Slide Styling */
+.product-slide {
+    display: none;
+    text-align: center;
+    height: 100%;
+}
+
+.product-slide.active {
+    display: block;
+}
+
+.product-slide img {
+    max-height: 500px;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Remove old navigation */
+.slider-nav {
+    display: none !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .instagram-arrow {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .instagram-dots {
+        bottom: 15px;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1364,148 +1475,9 @@
     </div>
     
     <script>
-        // Mobile Menu Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const mobileMenu = document.querySelector('.mobile-menu');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-            });
-        });
-
-        // Theme Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
-        const html = document.documentElement;
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            html.setAttribute('data-theme', newTheme);
-            themeToggle.innerHTML = newTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-            
-            // Save preference to localStorage
-            localStorage.setItem('theme', newTheme);
-        });
-
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', savedTheme);
-        themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-
-        // Hero Slider
-        class HeroSlider {
-            constructor() {
-                this.slides = document.querySelectorAll('.slide');
-                this.dots = document.querySelectorAll('.dot');
-                this.video = document.querySelector('.hero-video');
-                this.currentSlide = 0;
-                this.videoTimer = null;
-                this.videoDuration = 25000; // 25 seconds
-                this.imageSlideDuration = 5000; // 5 seconds
-                this.imageSlideInterval = null;
-                
-                this.init();
-            }
-            
-            init() {
-                // Set up video
-                this.video.muted = true;
-                this.video.playsInline = true;
-                
-                // Start with video
-                this.showSlide(0);
-                
-                // Set up dot navigation
-                this.dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => this.handleDotClick(index));
-                });
-            }
-            
-            showSlide(index) {
-                // Hide all slides
-                this.slides.forEach(slide => slide.classList.remove('active'));
-                this.dots.forEach(dot => dot.classList.remove('active'));
-                
-                // Show selected slide
-                this.slides[index].classList.add('active');
-                this.dots[index].classList.add('active');
-                this.currentSlide = index;
-                
-                // Handle video slide
-                if (index === 0) {
-                    this.startVideo();
-                } else {
-                    this.handleImageSlide();
-                }
-            }
-            
-            startVideo() {
-                // Clear any existing timers
-                clearTimeout(this.videoTimer);
-                clearInterval(this.imageSlideInterval);
-                
-                // Start or restart video
-                this.video.currentTime = 0;
-                this.video.play().catch(e => console.log("Video play error:", e));
-                
-                // Set timer to advance after full duration
-                this.videoTimer = setTimeout(() => {
-                    this.showSlide(1);
-                    this.startImageSlider();
-                }, this.videoDuration);
-            }
-            
-            handleImageSlide() {
-                // Pause video if we're not on video slide
-                this.video.pause();
-                
-                // Clear video timer
-                clearTimeout(this.videoTimer);
-            }
-            
-            startImageSlider() {
-                // Clear any existing interval
-                clearInterval(this.imageSlideInterval);
-                
-                // Start auto-advancing through images
-                this.imageSlideInterval = setInterval(() => {
-                    let nextSlide = (this.currentSlide + 1) % this.slides.length;
-                    if (nextSlide === 0) nextSlide = 1; // Skip video slide
-                    this.showSlide(nextSlide);
-                }, this.imageSlideDuration);
-            }
-            
-            handleDotClick(index) {
-                if (index === 0) {
-                    // Going back to video - restart it
-                    this.showSlide(0);
-                } else {
-                    // Going to image - pause video and show image
-                    this.showSlide(index);
-                    
-                    // If we were on video, start image slider
-                    if (this.currentSlide === 0) {
-                        this.startImageSlider();
-                    }
-                }
-            }
-        }
-
-        // Initialize Hero Slider
-        document.addEventListener('DOMContentLoaded', () => {
-            new HeroSlider();
-        });
-
-        // Product Modal - Instagram Style Navigation
+        // Product Modal with Instagram-style navigation - Fixed Version
+    document.addEventListener('DOMContentLoaded', function() {
+        // Product Modal Elements
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
@@ -1513,12 +1485,35 @@
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalProductDesc = document.getElementById('modal-product-desc');
         const shopeeLink = document.getElementById('shopee-link');
+        const sliderContainer = document.querySelector('.product-slider');
 
         let currentProduct = null;
         let currentSlideIndex = 0;
 
+        // Remove old navigation if exists
         const oldNav = document.querySelector('.slider-nav');
         if (oldNav) oldNav.remove();
+
+        // Create Instagram-style navigation
+        sliderContainer.innerHTML += `
+            <div class="instagram-nav">
+                <button class="instagram-arrow instagram-prev">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <div class="instagram-dots"></div>
+                <button class="instagram-arrow instagram-next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+        `;
+
+        const dotsContainer = document.querySelector('.instagram-dots');
+        const prevBtn = document.querySelector('.instagram-prev');
+        const nextBtn = document.querySelector('.instagram-next');
 
         // Product data
         const products = {
@@ -1590,6 +1585,105 @@
                 shopee: "https://shopee.com.my/ZTC.FXTROT-Active-Gear-Vest-%E2%80%93-Sesuai-untuk-Outdoor-Kecergasan-i.178104872.41700453189"
             }
         };
+
+        // Update dots navigation
+    function updateDots() {
+        dotsContainer.innerHTML = '';
+        if (!currentProduct) return;
+        
+        currentProduct.images.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.className = `instagram-dot ${index === currentSlideIndex ? 'active' : ''}`;
+            dot.addEventListener('click', () => showSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    // Show specific slide
+    function showSlide(index) {
+        productSlides.forEach((slide, i) => {
+            if (i === index) {
+                slide.classList.add('active');
+                slide.style.display = 'block';
+            } else {
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+            }
+        });
+        
+        currentSlideIndex = index;
+        updateDots();
+        
+        // Update arrow visibility
+        prevBtn.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
+        nextBtn.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
+    }
+
+    // View Details button click handler
+    viewProductBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product');
+            currentProduct = products[productId];
+            
+            if (!currentProduct) return;
+            
+            currentSlideIndex = 0;
+            
+            // Update modal content
+            modalProductTitle.textContent = currentProduct.title;
+            modalProductDesc.textContent = currentProduct.description;
+            shopeeLink.href = currentProduct.shopee;
+            
+            // Reset and load slides
+            productSlides.forEach((slide, index) => {
+                slide.style.display = 'none';
+                slide.classList.remove('active');
+                
+                if (currentProduct.images[index]) {
+                    slide.querySelector('img').src = currentProduct.images[index];
+                }
+            });
+            
+            // Show first slide
+            showSlide(0);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Navigation handlers
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showSlide(currentSlideIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showSlide(currentSlideIndex + 1);
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close when clicking outside modal
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Ensure Shopee link opens in new tab
+    shopeeLink.addEventListener('click', function(e) {
+        if (!this.href || this.href === '#') {
+            e.preventDefault();
+        }
+        // target="_blank" in HTML handles new tab
+    });
+});
 
         // Create Instagram-style navigation elements
         const sliderContainer = document.querySelector('.product-slider');
