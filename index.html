@@ -1273,12 +1273,12 @@
         // Mobile Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileMenu = document.querySelector('.mobile-menu');
-        
+
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
         });
-        
+
         // Close mobile menu when clicking a link
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
@@ -1286,11 +1286,11 @@
                 mobileMenu.classList.remove('active');
             });
         });
-        
+
         // Theme Toggle
         const themeToggle = document.querySelector('.theme-toggle');
         const html = document.documentElement;
-        
+
         themeToggle.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -1301,12 +1301,12 @@
             // Save preference to localStorage
             localStorage.setItem('theme', newTheme);
         });
-        
+
         // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme') || 'light';
         html.setAttribute('data-theme', savedTheme);
         themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-        
+
         // Hero Slider
         class HeroSlider {
             constructor() {
@@ -1412,7 +1412,6 @@
         });
 
         // Product Modal
-        // Product Modal - Updated Version
         const modal = document.getElementById('productModal');
         const viewProductBtns = document.querySelectorAll('.view-product');
         const closeModal = document.querySelector('.close-modal');
@@ -1424,26 +1423,6 @@
         let currentProduct = null;
         let currentSlideIndex = 0;
 
-        // Modern slider navigation elements
-        const sliderNav = document.createElement('div');
-        sliderNav.className = 'modern-slider-nav';
-        sliderNav.innerHTML = `
-            <button class="slider-arrow prev-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="slider-arrow next-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-        `;
-        document.querySelector('.product-slider').appendChild(sliderNav);
-
-        const prevArrow = document.querySelector('.prev-arrow');
-        const nextArrow = document.querySelector('.next-arrow');
-        
         // Product data
         const products = {
             1: {
@@ -1514,65 +1493,91 @@
                 shopee: "https://shopee.com.my/ZTC.FXTROT-Active-Gear-Vest-%E2%80%93-Sesuai-untuk-Outdoor-Kecergasan-i.178104872.41700453189"
             }
         };
-        
+
+        // Create modern slider navigation
+        const sliderNav = document.createElement('div');
+        sliderNav.className = 'modern-slider-nav';
+        sliderNav.innerHTML = `
+            <button class="slider-arrow prev-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="slider-arrow next-arrow">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        `;
+        document.querySelector('.product-slider').appendChild(sliderNav);
+
+        const prevArrow = document.querySelector('.prev-arrow');
+        const nextArrow = document.querySelector('.next-arrow');
+
         // Show specific slide
-function showProductSlide(index) {
-    productSlides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-    });
-    currentSlideIndex = index;
-    
-    // Update arrow visibility
-    prevArrow.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
-    nextArrow.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
-}
+        function showProductSlide(index) {
+            productSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentSlideIndex = index;
+            
+            // Update arrow visibility
+            prevArrow.style.display = currentSlideIndex === 0 ? 'none' : 'flex';
+            nextArrow.style.display = currentSlideIndex === currentProduct.images.length - 1 ? 'none' : 'flex';
+        }
 
-// View Details button click handler
-viewProductBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product');
-        currentProduct = products[productId];
-        currentSlideIndex = 0;
-        
-        // Update modal content
-        modalProductTitle.textContent = currentProduct.title;
-        modalProductDesc.textContent = currentProduct.description;
-        shopeeLink.href = currentProduct.shopee;
-        
-        // Reset slides
-        productSlides.forEach(slide => {
-            slide.classList.remove('active');
-            slide.querySelector('img').src = '';
+        // View Details button click handler
+        viewProductBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product');
+                if (!products[productId]) return;
+                
+                currentProduct = products[productId];
+                currentSlideIndex = 0;
+                
+                // Update modal content
+                modalProductTitle.textContent = currentProduct.title;
+                modalProductDesc.textContent = currentProduct.description;
+                shopeeLink.href = currentProduct.shopee;
+                
+                // Reset slides
+                productSlides.forEach(slide => {
+                    slide.classList.remove('active');
+                    slide.querySelector('img').src = '';
+                });
+                
+                // Load product images
+                currentProduct.images.forEach((img, index) => {
+                    if (productSlides[index]) {
+                        productSlides[index].querySelector('img').src = img;
+                    }
+                });
+                
+                // Show first slide
+                showProductSlide(0);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
         });
-        
-        // Load product images
-        currentProduct.images.forEach((img, index) => {
-            if (productSlides[index]) {
-                productSlides[index].querySelector('img').src = img;
-            }
+
+        // Navigation handlers
+        prevArrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const newIndex = Math.max(0, currentSlideIndex - 1);
+            showProductSlide(newIndex);
         });
-        
-        // Show first slide
-        showProductSlide(0);
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-});
 
-// Navigation handlers
-prevArrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const newIndex = Math.max(0, currentSlideIndex - 1);
-    showProductSlide(newIndex);
-});
+        nextArrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const newIndex = Math.min(currentProduct.images.length - 1, currentSlideIndex + 1);
+            showProductSlide(newIndex);
+        });
 
-nextArrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const newIndex = Math.min(currentProduct.images.length - 1, currentSlideIndex + 1);
-    showProductSlide(newIndex);
-});
-
-// Close modal handlers remain the same...
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
 
         // Close when clicking outside modal
         modal.addEventListener('click', (e) => {
@@ -1581,18 +1586,7 @@ nextArrow.addEventListener('click', (e) => {
                 document.body.style.overflow = 'auto';
             }
         });
-        
-        // Slide navigation
-        prevSlideBtn.addEventListener('click', () => {
-            let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
-            showProductSlide(newIndex);
-        });
 
-        nextSlideBtn.addEventListener('click', () => {
-            let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
-            showProductSlide(newIndex);
-        });
-        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1609,10 +1603,10 @@ nextArrow.addEventListener('click', (e) => {
                 }
             });
         });
-        
+
         // Intersection Observer for fade-in animations
         const fadeElements = document.querySelectorAll('.fade-in');
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1621,7 +1615,7 @@ nextArrow.addEventListener('click', (e) => {
                 }
             });
         }, { threshold: 0.1 });
-        
+
         fadeElements.forEach(el => {
             el.style.opacity = 0;
             el.style.transform = 'translateY(20px)';
