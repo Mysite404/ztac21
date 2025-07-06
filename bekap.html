@@ -241,6 +241,23 @@
         .hamburger.active span:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
         }
+
+        /* Video Hero Styles */
+        .slide-video {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         
         /* Mobile Menu */
         .mobile-menu {
@@ -309,16 +326,20 @@
             opacity: 1;
         }
         
-        /* TODO: Replace with actual hero images */
+        /* HERO IMAGE SLIDER*/
         .slide-1 {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/image.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/vid/vid.mp4');
         }
         
         .slide-2 {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(2\).png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/image.png');
         }
         
         .slide-3 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(2\).png');
+        }
+        
+        .slide-4 {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/img/img\ \(3\).png');
         }
         
