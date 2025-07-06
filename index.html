@@ -1574,20 +1574,6 @@ nextArrow.addEventListener('click', (e) => {
 
 // Close modal handlers remain the same...
 
-        // Previous slide
-        prevSlideBtn.addEventListener('click', () => {
-            if (!currentProduct) return;
-            const newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
-            showProductSlide(newIndex);
-        });
-
-        // Next slide
-        nextSlideBtn.addEventListener('click', () => {
-            if (!currentProduct) return;
-            const newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
-            showProductSlide(newIndex);
-        });
-
         // Close when clicking outside modal
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
