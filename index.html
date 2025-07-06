@@ -890,6 +890,7 @@
     <header>
         <div class="container">
             <nav>
+                <img style="width: 30px;" src="assets/img/favicon.png" alt="logo">
                 <a href="#" class="logo">ZTAC<span>Precision</span></a>
                 
                 <div class="nav-links">
@@ -1247,6 +1248,112 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <script>
+            class HeroSlider {
+        constructor() {
+            this.slides = document.querySelectorAll('.slide');
+            this.dots = document.querySelectorAll('.dot');
+            this.video = document.querySelector('.hero-video');
+            this.currentSlide = 0;
+            this.videoTimer = null;
+            this.videoStartTime = null;
+            this.videoDuration = 30000; // 30 seconds
+            this.imageSlideDuration = 5000; // 5 seconds
+            this.imageSlideInterval = null;
+            
+            this.init();
+        }
+        
+        init() {
+            // Set up video
+            this.video.muted = true;
+            this.video.playsInline = true;
+            
+            // Start with video
+            this.showSlide(0);
+            
+            // Set up dot navigation
+            this.dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => this.handleDotClick(index));
+            });
+        }
+        
+        showSlide(index) {
+            // Hide all slides
+            this.slides.forEach(slide => slide.classList.remove('active'));
+            this.dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show selected slide
+            this.slides[index].classList.add('active');
+            this.dots[index].classList.add('active');
+            this.currentSlide = index;
+            
+            // Handle video slide
+            if (index === 0) {
+                this.startVideo();
+            } else {
+                this.handleImageSlide();
+            }
+        }
+        
+        startVideo() {
+            // Clear any existing timers
+            clearTimeout(this.videoTimer);
+            clearInterval(this.imageSlideInterval);
+            
+            // Start or restart video
+            this.video.currentTime = 0;
+            this.videoStartTime = Date.now();
+            this.video.play().catch(e => console.log("Video play error:", e));
+            
+            // Set timer to advance after full duration
+            this.videoTimer = setTimeout(() => {
+                this.showSlide(1);
+                this.startImageSlider();
+            }, this.videoDuration - (Date.now() - this.videoStartTime));
+        }
+        
+        handleImageSlide() {
+            // Pause video if we're not on video slide
+            this.video.pause();
+            
+            // Clear video timer
+            clearTimeout(this.videoTimer);
+        }
+        
+        startImageSlider() {
+            // Clear any existing interval
+            clearInterval(this.imageSlideInterval);
+            
+            // Start auto-advancing through images
+            this.imageSlideInterval = setInterval(() => {
+                let nextSlide = (this.currentSlide + 1) % this.slides.length;
+                if (nextSlide === 0) nextSlide = 1; // Skip video slide
+                this.showSlide(nextSlide);
+            }, this.imageSlideDuration);
+        }
+        
+        handleDotClick(index) {
+            if (index === 0) {
+                // Going back to video - restart it
+                this.showSlide(0);
+            } else {
+                // Going to image - pause video and show image
+                this.showSlide(index);
+                
+                // If we were on video, start image slider
+                if (this.currentSlide === 0) {
+                    this.startImageSlider();
+                }
+            }
+        }
+    }
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new HeroSlider();
+});
+
+
         // Mobile Menu Toggle
         const hamburger = document.querySelector('.hamburger');
         const mobileMenu = document.querySelector('.mobile-menu');
@@ -1264,124 +1371,44 @@
             });
         });
         
-        // Hero Slider - Improved version
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-let currentSlide = 0;
-let videoTimer;
-let videoStartedAt;
-let isVideoPlaying = false;
-
-function showSlide(index, isManualNavigation = false) {
-    // Clear any existing timer
-    clearTimeout(videoTimer);
-    
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-    currentSlide = index;
-    
-    // Handle video slide
-            if (index === 0) {
-                const video = document.querySelector('.hero-video');
-                
-                if (isManualNavigation) {
-                    // User manually returned to video - restart it
-                    video.currentTime = 0;
-                    videoStartedAt = Date.now();
-                    isVideoPlaying = true;
-                    video.play().catch(e => console.log("Video play error:", e));
-                    
-                    // Set timer for remaining duration
-                    const elapsed = 0;
-                    const remaining = 30000 - elapsed;
-                    videoTimer = setTimeout(() => {
-                        showSlide(1);
-                        startImageSlider();
-                    }, remaining);
-                } else {
-                    // Initial video load
-                    videoStartedAt = Date.now();
-                    isVideoPlaying = true;
-                    video.play().catch(e => console.log("Video play error:", e));
-                    videoTimer = setTimeout(() => {
-                        showSlide(1);
-                        startImageSlider();
-                    }, 30000);
-                }
-            } else {
-                // Image slide - pause video if it was playing
-                if (isVideoPlaying) {
-                    const video = document.querySelector('.hero-video');
-                    video.pause();
-                    isVideoPlaying = false;
-                }
-            }
-        }
-
-        function startImageSlider() {
-            // This will be called after video completes
-            setInterval(() => {
-                if (currentSlide === 0) return; // Don't auto-advance from video
-                
-                let nextSlide = (currentSlide + 1) % slides.length;
-                if (nextSlide === 0) nextSlide = 1; // Skip back to first image
-                showSlide(nextSlide);
-            }, 5000); // 5 seconds for image slides
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.querySelector('.hero-video');
-            video.muted = true;
-            video.playsInline = true;
-            
-            // Start with video
-            showSlide(0);
-            
-            // Manual dot navigation
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index, true);
-                });
-            });
-        });
-
-        function startImageSlider() {
-            // This will be called after video completes
-            setInterval(() => {
-                if (currentSlide === 0) return; // Don't auto-advance from video
-                
-                let nextSlide = (currentSlide + 1) % slides.length;
-                if (nextSlide === 0) nextSlide = 1; // Skip back to first image
-                showSlide(nextSlide);
-            }, 5000); // 5 seconds for image slides
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.querySelector('.hero-video');
-            video.muted = true;
-            video.playsInline = true;
-            
-            // Start with video
-            showSlide(0);
-            
-            // Manual dot navigation
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index, true);
-                });
-            });
-        });
         
-        // Auto slide change
-        setInterval(() => {
-            let nextSlide = (currentSlide + 1) % slides.length;
-            showSlide(nextSlide);
-        }, 5000);
+        class HeroSlider {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.dots = document.querySelectorAll('.dot');
+        this.video = document.querySelector('.hero-video');
+        this.currentSlide = 0;
+        this.videoTimer = null;
+        this.videoStartTime = null;
+        this.videoDuration = 30000; // 30 seconds
+        this.imageSlideDuration = 5000; // 5 seconds
+        this.imageSlideInterval = null;
+        
+        this.init();
+    }
+    
+    init() {
+        // Set up video
+        this.video.muted = true;
+        this.video.playsInline = true;
+        
+        // Start with video
+        this.showSlide(0);
+        
+        // Set up dot navigation
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.handleDotClick(index));
+        });
+    }
+    
+    showSlide(index) {
+        // Hide all slides
+        this.slides.forEach(slide => slide.classList.remove('active'));
+        this.dots.forEach(dot => dot.classList.remove('active'));
+        
+        // Show selected slide
+        this.slides[index].classList.add('active');
+        this.dots[inde
         
         // Theme Toggle
         const themeToggle = document.querySelector('.theme-toggle');
