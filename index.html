@@ -848,6 +848,17 @@
             background-color: var(--accent);
         }
 
+    /* Video Hero Styles */
+        .slide-video {
+            position: relative;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate
+        }
     </style>
 </head>
 <body>
@@ -885,28 +896,44 @@
     </header>
     
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-slider">
-            <div class="slide slide-1 active"></div>
-            <div class="slide slide-2"></div>
-            <div class="slide slide-3"></div>
+<section class="hero" id="home">
+    <div class="hero-slider">
+        <!-- Video as first slide -->
+        <div class="slide slide-video active">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="/assets/vid/vid.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
         </div>
         
-        <div class="hero-content">
-            <h1 class="fade-in">ZTAC Precision</h1>
-            <p class="fade-in delay-1">Gear Up. Move Smart.</p>
-            <div class="hero-btns fade-in delay-2">
-                <a href="#products" class="btn">Shop Now</a>
-                <a href="#about" class="btn">Learn More</a>
-            </div>
+        <!-- Existing image slides -->
+        <div class="slide slide-1">
+            <div class="slide-bg"></div>
         </div>
-        
-        <div class="slider-dots">
-            <div class="dot active" data-slide="0"></div>
-            <div class="dot" data-slide="1"></div>
-            <div class="dot" data-slide="2"></div>
+        <div class="slide slide-2">
+            <div class="slide-bg"></div>
         </div>
-    </section>
+        <div class="slide slide-3">
+            <div class="slide-bg"></div>
+        </div>
+    </div>
+    
+    <div class="hero-content">
+        <h1 class="fade-in">ZTAC Precision</h1>
+        <p class="fade-in delay-1">Gear Up. Move Smart.</p>
+        <div class="hero-btns fade-in delay-2">
+            <a href="#products" class="btn">Shop Now</a>
+            <a href="#about" class="btn">Learn More</a>
+        </div>
+    </div>
+    
+    <div class="slider-dots">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+        <div class="dot" data-slide="3"></div>
+    </div>
+</section>
     
     <!-- Products Section -->
     <section class="products" id="products">
