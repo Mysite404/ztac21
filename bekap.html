@@ -1347,9 +1347,114 @@
         const modalProductTitle = document.getElementById('modal-product-title');
         const modalProductDesc = document.getElementById('modal-product-desc');
         const shopeeLink = document.getElementById('shopee-link');
-        
+        const dotsContainer = document.querySelector('.slide-dots');
+
         let currentProduct = null;
         let currentSlideIndex = 0;
+
+        // Open modal with product data
+        viewProductBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productId = btn.getAttribute('data-product');
+                currentProduct = products[productId];
+                currentSlideIndex = 0;
+                
+                // Set product info
+                modalProductTitle.textContent = currentProduct.title;
+                modalProductDesc.textContent = currentProduct.description;
+                shopeeLink.href = currentProduct.shopee;
+                
+                // Initialize slides and dots
+                initSlidesAndDots();
+                
+                // Show modal
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function initSlidesAndDots() {
+            // Clear existing dots
+            dotsContainer.innerHTML = '';
+            
+            // Hide all slides first
+            productSlides.forEach(slide => {
+                slide.style.display = 'none';
+                slide.classList.remove('active');
+            });
+            
+            // Create dots and prepare slides
+            currentProduct.images.forEach((img, index) => {
+                // Create dot for each image
+                const dot = document.createElement('div');
+                dot.classList.add('slide-dot');
+                if (index === 0) dot.classList.add('active');
+                dotsContainer.appendChild(dot);
+                
+                // Only use available slide elements (7 in your HTML)
+                if (index < productSlides.length) {
+                    productSlides[index].querySelector('img').src = img;
+                    productSlides[index].style.display = 'block';
+                }
+            });
+            
+            // Show first slide
+            showProductSlide(0);
+        }
+
+        function showProductSlide(index) {
+            // Hide all slides
+            productSlides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show selected slide
+            if (productSlides[index]) {
+                productSlides[index].classList.add('active');
+            }
+            
+            // Update dots
+            const dots = document.querySelectorAll('.slide-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSlideIndex = index;
+            updateSlideCounter();
+        }
+
+        function updateSlideCounter() {
+            if (currentProduct) {
+                slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
+            }
+        }
+
+        // Navigation buttons
+        prevSlideBtn.addEventListener('click', () => {
+            if (!currentProduct) return;
+            let newIndex = (currentSlideIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
+
+        nextSlideBtn.addEventListener('click', () => {
+            if (!currentProduct) return;
+            let newIndex = (currentSlideIndex + 1) % currentProduct.images.length;
+            showProductSlide(newIndex);
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
         
         // Product data
         const products = {
@@ -1684,7 +1789,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Add this to your product modal opening code
+        // modal
         viewProductBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const productId = btn.getAttribute('data-product');
