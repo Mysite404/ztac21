@@ -1662,5 +1662,61 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = value.substring(0, 15);
         });
     </script>
+    <script>
+        function showProductSlide(index) {
+            productSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            
+            // Update dots
+            const dots = document.querySelectorAll('.slide-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            currentSlideIndex = index;
+            updateSlideCounter();
+        }
+
+        function updateSlideCounter() {
+            if (currentProduct) {
+                slideCounter.textContent = `${currentSlideIndex + 1}/${currentProduct.images.length}`;
+            }
+        }
+
+        // Add this to your product modal opening code
+        viewProductBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productId = btn.getAttribute('data-product');
+                currentProduct = products[productId];
+                currentSlideIndex = 0;
+                
+                // Clear previous slides
+                productSlides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+
+                // Create dots
+                const dotsContainer = document.querySelector('.slide-dots');
+                dotsContainer.innerHTML = '';
+                currentProduct.images.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('slide-dot');
+                    if (i === 0) dot.classList.add('active');
+                    dotsContainer.appendChild(dot);
+                });
+
+                // Load new images
+                currentProduct.images.forEach((img, index) => {
+                    if (productSlides[index]) {
+                        productSlides[index].querySelector('img').src = img;
+                    }
+                });
+
+                showProductSlide(0);
+                modal.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
